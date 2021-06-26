@@ -1,11 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import QuestionEditor from "./components/QuestionEditor";
+import THomePage from './pages/THomePage'
 
 function App() {
-    const question = { choices: { A: "as", B: "to", C: true, D: false }, questionType: "multiple" };
     return (
         <div className="App">
-            <QuestionEditor question={question}></QuestionEditor>
+            <THomePage></THomePage>
         </div>
     );
 }
