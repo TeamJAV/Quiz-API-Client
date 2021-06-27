@@ -1,0 +1,10 @@
+@mixin btn--pill {
+    border-radius: 30px !important;
+    min-width: 144px;
+    padding: 0 24px;
+}
+
+@mixin flex-vcenter {
+    display: flex;
+    align-items: center;
+}

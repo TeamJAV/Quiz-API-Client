@@ -10,10 +10,10 @@ import {
     faTrashAlt,
     faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import "./QuestionEditor.scss";
 import { _throw } from "../utils/utils";
 
 export default function QuestionEditor(props) {
+    console.log("questionEditor");
     const {
         title: pTitle = "",
         questionType: pQuestionType = "",
@@ -36,7 +36,7 @@ export default function QuestionEditor(props) {
     const [questionType, setQuestionType] = useState(pQuestionType);
     const [questionId, setQuestionId] = useState(pQuestionId);
     const [img, setImg] = useState(pImage);
-    const [imgPreview, setImgPreview] = useState("");
+    const [imgPreview, setImgPreview] = useState(img || "");
     const [isLabelVisible, setIsLabelVisible] = useState(
         questionType === "multiple" ? true : false
     );
@@ -186,12 +186,12 @@ export default function QuestionEditor(props) {
         <Container
             key={questionId}
             fluid
-            className="question-editor flex items-start text-base"
+            className="question flex items-start text-base font-editor bg-grey--light"
         >
             <div className="grid question-grid flex-1 ">
                 <div className="grid question-fields  w-100 wm-64r">
                     <div className="w-100 h-100 flex justify-center align-center">
-                        <span>{pQuestionNo + "."}</span>
+                        <span className="font-700 text-md">{pQuestionNo + "."}</span>
                     </div>
                     <div className="flex col-start-2">
                         <input
@@ -239,7 +239,7 @@ export default function QuestionEditor(props) {
                         />
                     </div>
                     <div
-                        className="w-3r h-3r flex align-center justify-center image-delete"
+                        className="w-3r h-3r flex align-center justify-center image-delete btn-delete"
                         onClick={() => {
                             setImg(null);
                         }}
@@ -256,7 +256,7 @@ export default function QuestionEditor(props) {
                             {isLabelVisible ? (
                                 <div className="flex flex-none align-center justify-center w-100 h-100">
                                     <div className="order order--rounded ">
-                                        <span>{key}</span>
+                                        <span className="font-700">{key}</span>
                                     </div>
                                 </div>
                             ) : isShortAnswer ? (
@@ -303,7 +303,7 @@ export default function QuestionEditor(props) {
                                 ></input>
                                 {isChangeAnsQuantAllowed ? (
                                     <div
-                                        className="w-3r h-3r flex align-center justify-center"
+                                        className="w-3r h-3r flex align-center justify-center btn-delete"
                                         onClick={() =>
                                             handleOnClickRemoveAnswer(i)
                                         }
@@ -340,7 +340,7 @@ export default function QuestionEditor(props) {
                     >
                         <div className="flex align-center justify-center w-100 h-100">
                             <div className="order order--rounded2 ">
-                                <span>i</span>
+                                <span className="font-700">i</span>
                             </div>
                         </div>
                         <div className="flex col-start-2">
@@ -360,7 +360,7 @@ export default function QuestionEditor(props) {
             </div>
             <div className="flex flex-col flex-none button-field">
                 <Button
-                    className="w-3r h-3r"
+                    className="w-3r h-3r btn-main"
                     onClick={() => {
                         try {
                             const question = createQuestionObject();
@@ -373,9 +373,8 @@ export default function QuestionEditor(props) {
                     <FontAwesomeIcon icon={faCheck} size="lg"></FontAwesomeIcon>
                 </Button>
                 <Button
-                    className="w-3r h-3r"
+                    className="w-3r h-3r mt-1r btn-sub"
                     variant="outline-light"
-                    style={{ backgroundColor: "#FFF", color: "#0099c7" }}
                     onClick={() => deleteQuestion()}
                 >
                     <FontAwesomeIcon

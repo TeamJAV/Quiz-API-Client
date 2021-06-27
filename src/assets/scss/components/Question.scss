@@ -1,12 +1,14 @@
-@import "../styles/main.scss";
-.question-editor {
+.question {
     padding: 2.5rem 2.5rem;
-    background-color: $grey--light;
 
     .btn-add-ans {
         color: $blue--xbold;
         background-color: $white--normal;
         font-size: bold;
+    }
+
+    .btn-delete {
+        color: $grey--bold;
     }
 
     .question-input {
@@ -18,19 +20,29 @@
     .checkbox {
         @include flex-vcenter;
         justify-content: center;
-        // width: 2rem;
-        height: 2rem;
-        flex: 0 0 2rem;
+        border-radius: 50%;
+    }
+
+    .order {
+        height: 2.25rem;
+        flex: 0 0 2.25rem;
     }
 
     .order--rounded {
         background-color: $grey--normal;
-        border-radius: 50%;
     }
 
     .order--rounded2 {
         background-color: $white--normal;
-        border-radius: 50%;
+    }
+
+    .order--true {
+        color: $white--normal;
+        background-color: $green--normal;
+    }
+
+    .order--shadow {
+        box-shadow: inset 0 0 0 2px $grey--normal;
     }
 
     .nowrap {
@@ -38,11 +50,12 @@
     }
 
     .image-field {
-        background-color: blue;
+        background: $white--normal url("/assets/images/add-image.png") no-repeat center; 
         margin-top: 2rem;
         margin-left: 3rem;
         width: 25rem;
         height: 25rem;
+        border-radius: .5rem;
         position: relative; 
         .image-delete {
             position: absolute;

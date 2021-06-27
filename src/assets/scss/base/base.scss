@@ -1,43 +1,22 @@
-// ------------ COLOR ------------------- //
-
-$blue--xlight: #e4fbff;
-$blue--light: #8cb4d2;
-$blue--normal: #00b5e2;
-$blue--bold: #0099c7;
-$blue--xbold: #0075a3;
-
-$orange--xlight: #fff7e5;
-$orange--light: #f0ac4c;
-$orange--normal: #ffa100;
-$orange--bold: #ff8528;
-
-$yellow--normal: #e8c400;
-
-$purple--normal: #8c6fcc;
-
-$white--normal: #ffffff;
-
-$grey--light: #f5f7f8;
-$grey--normal: #dde5ea;
-$grey--bold: #abb4bd;
-
 // ------------ BUTTON ------------------- //
-
-@mixin btn--pill {
-    border-radius: 30px;
-    height: 44px;
-    min-width: 144px;
-    padding: 0 24px;
-}
-
-button,
-input {
+button {
     border: none !important;
     border-radius: 0.5rem !important;
 }
 
+.btn-main {
+    background-color: $blue--normal;
+}
+
+.btn-sub { 
+    background-color: transparent;
+    color: $blue--bold;
+}
+
 // ------------------- Input ----------------//
 input {
+    border: none !important;
+    border-radius: 0.5rem !important;
     line-height: 1.8;
 }
 
@@ -55,6 +34,11 @@ input {
 ::-ms-input-placeholder {
     /* Microsoft Edge */
     color: $grey--bold;
+}
+
+.checkbox {
+    height: 2rem;
+    flex: 0 0 2rem;
 }
 
 .checkbox-rounded {
@@ -81,7 +65,7 @@ input {
     border-right: none;
     content: "";
     height: 0.5rem;
-    left: 6px;
+    left: 5px;
     opacity: 0;
     position: absolute;
     top: 7px;
@@ -102,12 +86,10 @@ input {
     opacity: 1;
 }
 
+
+
 // ---------------- Layout ----------------//
 
-@mixin flex-vcenter {
-    display: flex;
-    align-items: center;
-}
 
 .dp-flex {
     @include flex-vcenter;
@@ -127,6 +109,9 @@ input {
 .items-start {
     align-items: flex-start;
 }
+.flex-wrap {
+    flex-wrap: wrap;
+}
 .flex-none {
     flex: none;
 }
@@ -142,6 +127,9 @@ input {
 .justify-center {
     justify-content: center;
 }
+.justify-between {
+    justify-content: space-between;
+}
 .grid {
     display: grid;
 }
@@ -149,7 +137,7 @@ input {
     grid-column-start: 2;
 }
 .col-span-2 {
-    grid-column: span 2/ span 2;
+    grid-column: span 2 / span 2;
 }
 .w-3r {
     width: 3rem;
@@ -163,11 +151,28 @@ input {
 .-mr-3r {
     margin-right: -3rem;
 }
+.ml-2r {
+    margin-left: 2rem;
+}
 .mt-1r {
     margin-top: 1rem;
 }
+.mt-0_5r {
+    margin-top: 0.5rem;
+}
 .ml-0_5r {
     margin-left: 0.5rem;
+}
+.m-0_5r {
+    margin: 0.5rem;
+}
+.py-3r {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+.py-5r {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
 }
 @media (min-width: 640px) {
     .mr-0--md {
@@ -192,6 +197,15 @@ input {
 }
 
 // ---------------- Text ----------------//
+.font-editor {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Roboto", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
+.font-700 {
+    font-weight: 700;
+}
+
 .text-center {
     text-align: center;
 }
@@ -204,6 +218,28 @@ input {
     font-size: 1.33334rem;
 }
 
+.text-display {
+    font-size: 1.41667rem;
+}
+
 .text-md {
     font-size: 1.66667rem;
+}
+
+.text-xl {
+    font-size: 3.33334rem;
+}
+
+// ---------------- Background ----------------//
+.bg-grey--light {
+    background-color: $grey--light;
+}
+
+.bg-white {
+    background-color: $white--normal;
+}
+
+// ---------------- Box shadows ----------------//
+.shadow-border-t {
+    box-shadow: 0 -1px 0 0 #e7edf0;
 }
