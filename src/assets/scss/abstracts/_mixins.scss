@@ -8,3 +8,7 @@
     display: flex;
     align-items: center;
 }
+
+@mixin border-radius-_5r {
+    border-radius: 0.5rem ;
+}

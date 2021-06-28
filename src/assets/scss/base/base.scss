@@ -1,5 +1,5 @@
 // ------------ BUTTON ------------------- //
-button {
+button, .btn-custom {
     border: none !important;
     border-radius: 0.5rem !important;
 }
@@ -11,6 +11,16 @@ button {
 .btn-sub { 
     background-color: transparent;
     color: $blue--bold;
+}
+
+.btn-true {
+    background-color: $green--normal;
+    color: $white--normal;
+}
+
+.btn-false {
+    background-color: $pink--normal;
+    color: $white--normal;
 }
 
 // ------------------- Input ----------------//
@@ -157,6 +167,9 @@ input {
 .mt-1r {
     margin-top: 1rem;
 }
+.mr-1r {
+    margin-right: 1rem;
+}
 .mt-0_5r {
     margin-top: 0.5rem;
 }
@@ -230,6 +243,10 @@ input {
     font-size: 3.33334rem;
 }
 
+.text-green {
+    color: $green--bold;
+}
+
 // ---------------- Background ----------------//
 .bg-grey--light {
     background-color: $grey--light;
@@ -239,7 +256,15 @@ input {
     background-color: $white--normal;
 }
 
-// ---------------- Box shadows ----------------//
+.bg-green--light {
+    background-color: $green--light;
+}
+
+// ---------------- Box shadows & border ----------------//
 .shadow-border-t {
     box-shadow: 0 -1px 0 0 #e7edf0;
+}
+
+.brad-_25r {
+    border-radius: 0.25rem ;
 }

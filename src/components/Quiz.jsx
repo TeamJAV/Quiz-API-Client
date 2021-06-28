@@ -16,6 +16,53 @@ import QuestionEditor from "./QuestionEditor";
  * }
  */
 
+ const fakeQuestion = {
+    title: "fake taxi",
+    questionType: "multiple",
+    explain: "explain yourself",
+    choices: {
+        A: "asd",
+        B: "fghd",
+        C: "wrtwertwert",
+        D: "fghdfghdfghdfgh",
+    },
+    correct: ["B", "D"],
+    questionId: "a217",
+    questionNo: 1,
+    image: "https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg",
+};
+
+const fakeTrueQuestion = {
+    title: "bangbros",
+    questionType: "true-false",
+    explain: "true-false",
+    choices: {
+        A: "true",
+        B: "false"
+    },
+    correct: ["A"],
+    questionId: "a218",
+    questionNo: 2,
+    image: "https://pix10.agoda.net/hotelImages/294/294166/294166_15040615130026720872.jpg?s=1024x768",
+}
+
+const fakeShortQuestion = {
+    title: "brazzers",
+    questionType: "short-answer",
+    explain: "asdfkhjaklsd",
+    choices: {
+        A: "abc",
+        B: "zyz",
+        C: "Hotel California",
+        D: "Baby 1 more time",
+        E: "This is luck"
+    },
+    correct: ["A","B","C","D","E"],
+    questionId: "a219",
+    questionNo: 3,
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQp2MSeY4hViZvKC4bU5vUWamLoAKwjZrfTA&usqp=CAU",
+}
+
 export default function Quiz(props) {
     const { quizId: pQuizId = null, quizName: pQuizName = "Untitled" } =
         props.quiz || {};
@@ -29,21 +76,7 @@ export default function Quiz(props) {
 
     const quizNameInputRef = useRef();
 
-    const fakeQuestion = {
-        title: "fake taxi",
-        questionType: "multiple",
-        explain: "explain yourself",
-        choices: {
-            A: "asd",
-            B: "fghd",
-            C: "wrtwertwert",
-            D: "fghdfghdfghdfgh",
-        },
-        correct: ["B", "D"],
-        questionId: "a217",
-        questionNo: 1,
-        image: "https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg",
-    };
+
 
     console.log(questionEditor);
     return (
@@ -73,6 +106,8 @@ export default function Quiz(props) {
                 </Button>
             </div>
             <Question question={fakeQuestion}></Question>
+            <Question question={fakeTrueQuestion}></Question>
+            <Question question={fakeShortQuestion}></Question>
             {questionEditor.mode === "create" ? (
                 <QuestionEditor
                     question={questionEditor.question}

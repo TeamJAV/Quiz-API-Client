@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { _throw } from "../utils/utils";
 
 export default function Question(props) {
@@ -26,6 +26,65 @@ export default function Question(props) {
     );
 
     console.log(choices);
+
+    const renderMultipleChoices = () => {
+        return choices.map(([key, value], i) => {
+            const isCorrect = correct.includes(key);
+            return (
+                <div key={key} className="grid question-fields wm-64r">
+                    {isLabelVisible ? (
+                        <div className="flex flex-none align-center justify-center w-100 h-100">
+                            <div
+                                className={`order order--rounded ${
+                                    isCorrect ? "order--true" : ""
+                                }`}
+                            >
+                                <span className="font-700">{key}</span>
+                            </div>
+                        </div>
+                    ) : isShortAnswer ? (
+                        <div className="w-3r h-3r flex justify-center align-center"></div>
+                    ) : null}
+                    <div className="flex col-start-2 col-span-2 flex-1">
+                        <div className="flex-1 question-input">{value}</div>
+                    </div>
+                </div>
+            );
+        });
+    };
+
+    const renderTrueFalseChoices = () => {
+        const value = correct[0] === "A" ? true : false;
+        return (
+            <div key={correct[0]} className="grid question-fields wm-64r">
+                <div className="w-3r h-3r flex justify-center align-center"></div>
+                <div className="flex col-start-2 col-span-2 flex-1">
+                    <div className={`question-input btn-custom btn-${value}`}>
+                        {value ? "True" : "False"}
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    const renderShortChoices = () => {
+        return (
+            <div className="grid question-fields wm-64r">
+                <div className="flex col-start-2 col-span-2 flex-1">
+                    <div className="w-3r h-3r flex justify-center align-center"></div>
+                    <div className="flex col-start-2 col-span-2 flex-1">
+                        {choices.map(([key, value], i) => {
+                            return (
+                                <div className="question-input bg-green--light text-green mr-1r brad-_25r">
+                                    {value}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </div>
+        );
+    };
 
     return (
         <Container
@@ -57,33 +116,17 @@ export default function Question(props) {
                     </div>
                 </div>
                 <div className="row-start-2--lg -mr-3r mr-0--md mt-1r">
-                    {choices.map(([key, value], i) => (
-                        <div
-                            key={key}
-                            className="grid question-fields wm-64r"
-                        >
-                            {isLabelVisible ? (
-                                <div className="flex flex-none align-center justify-center w-100 h-100">
-                                    <div
-                                        className={`order order--rounded ${
-                                            correct.includes(key)
-                                                ? "order--true"
-                                                : ""
-                                        }`}
-                                    >
-                                        <span className="font-700">{key}</span>
-                                    </div>
-                                </div>
-                            ) : isShortAnswer ? (
-                                <div className="w-3r h-3r flex justify-center align-center"></div>
-                            ) : null}
-                            <div className="flex col-start-2 col-span-2 flex-1">
-                                <div className="flex-1 question-input">
-                                    {value}
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+                    {(() => {
+                        switch (questionType) {
+                            case "true-false":
+                                return renderTrueFalseChoices();
+                            case "short-answer":
+                                return renderShortChoices();
+                            case "multiple":
+                            default:
+                                return renderMultipleChoices();
+                        }
+                    })()}
                     <div
                         key="explanation"
                         className="grid question-fields wm-64r mt-1r"
@@ -113,7 +156,7 @@ export default function Question(props) {
                     //     }
                     // }}
                 >
-                    <FontAwesomeIcon icon={faCheck} size="lg"></FontAwesomeIcon>
+                    <FontAwesomeIcon icon={faPencilAlt} size="lg"></FontAwesomeIcon>
                 </Button>
                 <Button
                     className="w-3r h-3r mt-1r btn-sub"
