@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Question from "./Question";
@@ -16,52 +16,57 @@ import QuestionEditor from "./QuestionEditor";
  * }
  */
 
- const fakeQuestion = {
-    title: "fake taxi",
-    questionType: "multiple",
-    explain: "explain yourself",
-    choices: {
-        A: "asd",
-        B: "fghd",
-        C: "wrtwertwert",
-        D: "fghdfghdfghdfgh",
-    },
-    correct: ["B", "D"],
-    questionId: "a217",
-    questionNo: 1,
-    image: "https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg",
+const questionEditorInitState = {
+    mode: "none", // 1 - none ; 2 - create; 3 - edit
+    question: { questionType: "" },
 };
 
-const fakeTrueQuestion = {
-    title: "bangbros",
-    questionType: "true-false",
-    explain: "true-false",
-    choices: {
-        A: "true",
-        B: "false"
+const fakeQuestion = [
+    {
+        title: "bangbros",
+        questionType: "true-false",
+        explain: "true-false",
+        choices: {
+            A: "true",
+            B: "false",
+        },
+        correct: ["A"],
+        questionId: "a218",
+        questionNo: 2,
+        image: "https://pix10.agoda.net/hotelImages/294/294166/294166_15040615130026720872.jpg?s=1024x768",
     },
-    correct: ["A"],
-    questionId: "a218",
-    questionNo: 2,
-    image: "https://pix10.agoda.net/hotelImages/294/294166/294166_15040615130026720872.jpg?s=1024x768",
-}
-
-const fakeShortQuestion = {
-    title: "brazzers",
-    questionType: "short-answer",
-    explain: "asdfkhjaklsd",
-    choices: {
-        A: "abc",
-        B: "zyz",
-        C: "Hotel California",
-        D: "Baby 1 more time",
-        E: "This is luck"
+    {
+        title: "fake taxi",
+        questionType: "multiple",
+        explain: "explain yourself",
+        choices: {
+            A: "asd",
+            B: "fghd",
+            C: "wrtwertwert",
+            D: "fghdfghdfghdfgh",
+        },
+        correct: ["B", "D"],
+        questionId: "a217",
+        questionNo: 1,
+        image: "https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg",
     },
-    correct: ["A","B","C","D","E"],
-    questionId: "a219",
-    questionNo: 3,
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQp2MSeY4hViZvKC4bU5vUWamLoAKwjZrfTA&usqp=CAU",
-}
+    {
+        title: "brazzers",
+        questionType: "short-answer",
+        explain: "asdfkhjaklsd",
+        choices: {
+            A: "abc",
+            B: "zyz",
+            C: "Hotel California",
+            D: "Baby 1 more time",
+            E: "This is luck",
+        },
+        correct: ["A", "B", "C", "D", "E"],
+        questionId: "a219",
+        questionNo: 3,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQp2MSeY4hViZvKC4bU5vUWamLoAKwjZrfTA&usqp=CAU",
+    },
+];
 
 export default function Quiz(props) {
     const { quizId: pQuizId = null, quizName: pQuizName = "Untitled" } =
@@ -69,18 +74,19 @@ export default function Quiz(props) {
 
     const [quizId, setQuizId] = useState(pQuizId);
     const [quizName, setQuizName] = useState(pQuizName);
-    const [questionEditor, setQuestionEditor] = useState({
-        mode: "none", // 1 - none ; 2 - create; 3 - edit
-        question: { questionType: "" },
-    });
+    const [questionEditor, setQuestionEditor] = useState(
+        questionEditorInitState
+    );
 
+    const [questions, setQuestions] = useState(fakeQuestion);
     const quizNameInputRef = useRef();
 
+    useEffect(() => {
+        setQuestionEditor(questionEditorInitState);
+    }, [questions]);
 
-
-    console.log(questionEditor);
     return (
-        <Container fluid className="question-list px-0" id="question-list">
+        <Container fluid className="quiz-container px-0" id="quiz-container">
             <div
                 className="w-100 justify-between py-3r flex"
                 id="name-input-container"
@@ -105,14 +111,19 @@ export default function Quiz(props) {
                     Save and exit
                 </Button>
             </div>
-            <Question question={fakeQuestion}></Question>
-            <Question question={fakeTrueQuestion}></Question>
-            <Question question={fakeShortQuestion}></Question>
+            <ListQuestions questions={questions}></ListQuestions>
             {questionEditor.mode === "create" ? (
                 <QuestionEditor
                     question={questionEditor.question}
+                    questionNo={questions.length + 1}
                     quizId={quizId}
-                    delete={() => {
+                    onSave={(question) => {
+                        setQuestions((prevQuestions) => [
+                            ...prevQuestions,
+                            question,
+                        ]);
+                    }}
+                    onDelete={() => {
                         setQuestionEditor({
                             mode: "none",
                             question: { questionType: "" },
@@ -152,3 +163,19 @@ export default function Quiz(props) {
         </Container>
     );
 }
+
+const ListQuestions = React.memo((props) => {
+    return (
+        <div className="question-list">
+            {props.questions.map((question, index) => {
+                return (
+                    <Question
+                        key={index}
+                        question={question}
+                        questionNo={index + 1}
+                    ></Question>
+                );
+            })}
+        </div>
+    );
+});

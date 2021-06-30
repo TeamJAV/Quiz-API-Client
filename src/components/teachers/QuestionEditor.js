@@ -2,7 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { nanoid } from "nanoid";
-import { nextAnswerIdAlphabet, prevAnswerIdAlphabet } from "../utils/Questions";
+import {
+    nextAnswerIdAlphabet,
+    prevAnswerIdAlphabet,
+} from "../../utils/Questions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faTimes,
@@ -10,7 +13,7 @@ import {
     faTrashAlt,
     faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import { _throw } from "../utils/utils";
+import { _throw } from "../../utils/utils";
 
 export default function QuestionEditor(props) {
     console.log("questionEditor");
@@ -22,19 +25,17 @@ export default function QuestionEditor(props) {
             ? { A: true, B: false }
             : { A: "", B: "", C: "", D: "" },
         correct: pCorrect = [],
-        questionId: pQuestionId = nanoid(),
-        questionNo: pQuestionNo = 1,
         image: pImage = null,
+        id: questionId = nanoid(),
     } = props.question || {};
 
-    const deleteQuestion = props.delete;
+    const questionNo = props.questionNo;
     const quizId = props.quizId || "";
     const [title, setTitle] = useState(pTitle);
     const [explain, setExplain] = useState(pExplain);
     const [choices, setChoices] = useState(Object.entries(pChoices));
     const [correct, setCorrect] = useState(pCorrect);
     const [questionType, setQuestionType] = useState(pQuestionType);
-    const [questionId, setQuestionId] = useState(pQuestionId);
     const [img, setImg] = useState(pImage);
     const [imgPreview, setImgPreview] = useState(img || "");
     const [isLabelVisible, setIsLabelVisible] = useState(
@@ -155,7 +156,7 @@ export default function QuestionEditor(props) {
         }
         const question = {};
         question.title = title;
-        question.question_type = questionType;
+        question.questionType = questionType;
         question.explain = explain;
         question.quizId = quizId;
         question.choices = Object.fromEntries(choices);
@@ -184,14 +185,15 @@ export default function QuestionEditor(props) {
      */
     return (
         <Container
-            key={questionId}
             fluid
             className="question flex items-start text-base font-editor bg-grey--light"
         >
             <div className="grid question-grid flex-1 ">
                 <div className="grid question-fields  w-100 wm-64r">
                     <div className="w-100 h-100 flex justify-center align-center">
-                        <span className="font-700 text-md">{pQuestionNo + "."}</span>
+                        <span className="font-700 text-md">
+                            {questionNo + "."}
+                        </span>
                     </div>
                     <div className="flex col-start-2">
                         <input
@@ -220,8 +222,12 @@ export default function QuestionEditor(props) {
                                 objectFit: "cover",
                             }}
                             alt=""
-                            onLoad={(event) => {event.target.style.display = "inline"}}
-                            onError={(event) => {event.target.style.display = "none"}}
+                            onLoad={(event) => {
+                                event.target.style.display = "inline";
+                            }}
+                            onError={(event) => {
+                                event.target.style.display = "none";
+                            }}
                         />
                         <input
                             type="file"
@@ -364,7 +370,7 @@ export default function QuestionEditor(props) {
                     onClick={() => {
                         try {
                             const question = createQuestionObject();
-                            console.log(question);
+                            props.onSave(question)
                         } catch (err) {
                             console.log(err);
                         }
@@ -375,7 +381,7 @@ export default function QuestionEditor(props) {
                 <Button
                     className="w-3r h-3r mt-1r btn-sub"
                     variant="outline-light"
-                    onClick={() => deleteQuestion()}
+                    onClick={() => props.onDelete()}
                 >
                     <FontAwesomeIcon
                         icon={faTrashAlt}

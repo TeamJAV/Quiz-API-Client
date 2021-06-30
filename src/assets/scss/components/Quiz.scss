@@ -1,4 +1,7 @@
-#question-list {
+#quiz-container {
+    padding-left: 0;
+    padding-right: 0;
+
     .btn-select-question {
         padding: 1rem 3rem;
         font-size: 1.41667rem;
@@ -11,11 +14,11 @@
         color: $orange--light;
         background-color: $orange--xlight;
     }
-    .btn-true-false{
+    .btn-true-false {
         color: $blue2--normal;
         background-color: $blue2--light;
     }
-    .btn-short-answer{
+    .btn-short-answer {
         color: $red--normal;
         background-color: $red--light;
     }
@@ -49,7 +52,7 @@
 
     #quiz-name-edit:focus {
         outline: none;
-        box-shadow: inset 0 0 0 2px #73C3DB;
+        box-shadow: inset 0 0 0 2px #73c3db;
     }
 
     @media (min-width: 640px) {
@@ -62,7 +65,7 @@
         }
     }
     @media (min-width: 1024px) {
-        #quiz-name-edit { 
+        #quiz-name-edit {
             flex-grow: 0;
             min-width: 42rem;
         }

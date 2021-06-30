@@ -1,7 +1,7 @@
 import React from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import QuizTab from "../components/QuizTab";
+import QuizTab from "../components/teachers/QuizTab";
 
 export default function THomePage() {
     return (

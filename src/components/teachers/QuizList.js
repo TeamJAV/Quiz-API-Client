@@ -4,7 +4,7 @@ import Quiz from './Quiz'
 
 export default function QuizList() {
     return (
-        <Container className="quiz-list">
+        <Container fluid className="quiz-list">
             <Quiz quiz={{quizId: 3, quizName: "abxyz"}}></Quiz>
         </Container>
     )
