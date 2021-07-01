@@ -170,6 +170,9 @@ input {
 .mr-1r {
     margin-right: 1rem;
 }
+.mb-1r {
+    margin-bottom: 1rem;
+}
 .mt-0_5r {
     margin-top: 0.5rem;
 }
@@ -262,7 +265,7 @@ input {
 
 // ---------------- Box shadows & border ----------------//
 .shadow-border-t {
-    box-shadow: 0 -1px 0 0 #e7edf0;
+    box-shadow: 0 -31px 0 -30px #e7edf0;
 }
 
 .brad-_25r {

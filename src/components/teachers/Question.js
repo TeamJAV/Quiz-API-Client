@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { _throw } from "../../utils/utils";
+import QuestionEditor from "./QuestionEditor";
 
 export default function Question(props) {
     const { title, questionType, explain, correct, id, image } = props.question;
+    const [isEditing, setIsEditing] = useState(false);
 
     const questionNo = props.questionNo;
+    const quizId = props.quizId;
     const choices = Object.entries(props.question.choices);
 
     const [isLabelVisible, setIsLabelVisible] = useState(
@@ -18,7 +21,9 @@ export default function Question(props) {
         questionType === "short-answer" ? true : false
     );
 
-    console.log(choices);
+    useEffect(() => {
+        if (isEditing) setIsEditing(false)
+    }, [props.question])
 
     const renderMultipleChoices = () => {
         return choices.map(([key, value], i) => {
@@ -69,7 +74,7 @@ export default function Question(props) {
                         {choices.map(([key, value], i) => {
                             return (
                                 <div
-                                    className="question-input bg-green--light text-green mr-1r brad-_25r"
+                                    className="question-input bg-green--light text-green mr-1r mb-1r brad-_25r"
                                     key={key}
                                 >
                                     {value}
@@ -82,96 +87,111 @@ export default function Question(props) {
         );
     };
 
-    return (
-        <Container
-            fluid
-            className="question flex items-start text-base font-editor bg-white shadow-border-t"
-        >
-            <div className="grid question-grid flex-1 ">
-                <div className="grid question-fields  w-100 wm-64r">
-                    <div className="w-100 h-100 flex justify-center align-center">
-                        <span className="font-700 text-md">
-                            {questionNo + "."}
-                        </span>
-                    </div>
-                    <div className="flex col-start-2">
-                        <div className="flex-1 question-input">{title}</div>
-                    </div>
-                </div>
-
-                {image !== null && image !== undefined ? (
-                    <div className="image-field col-start-2--lg row-span-2">
-                        <div className="w-100 h-100">
-                            <img
-                                className="w-100 h-100"
-                                src={image}
-                                style={{
-                                    objectFit: "cover",
-                                }}
-                                alt=""
-                            />
+    const renderQuestion = () => {
+        return (
+            <Container
+                fluid
+                className="question flex items-start text-base font-editor bg-white shadow-border-t"
+            >
+                <div className="grid question-grid flex-1 ">
+                    <div className="grid question-fields  w-100 wm-64r">
+                        <div className="w-100 h-100 flex justify-center align-center">
+                            <span className="font-700 text-md">
+                                {questionNo + "."}
+                            </span>
+                        </div>
+                        <div className="flex col-start-2">
+                            <div className="flex-1 question-input">{title}</div>
                         </div>
                     </div>
-                ) : null}
-                <div className="row-start-2--lg -mr-3r mr-0--md mt-1r">
-                    {(() => {
-                        switch (questionType) {
-                            case "true-false":
-                                return renderTrueFalseChoices();
-                            case "short-answer":
-                                return renderShortChoices();
-                            case "multiple":
-                            default:
-                                return renderMultipleChoices();
-                        }
-                    })()}
-                    {explain !== "" ? (
-                        <div
-                            key="explanation"
-                            className="grid question-fields wm-64r mt-1r"
-                        >
-                            <div className="flex align-center justify-center w-100 h-100">
-                                <div className="order order--rounded2 order--shadow">
-                                    <span className="font-700">i</span>
-                                </div>
-                            </div>
-                            <div className="flex col-start-2">
-                                <div className="flex-1 question-input">
-                                    {explain}
-                                </div>
+
+                    {image !== null && image !== undefined ? (
+                        <div className="image-field col-start-2--lg row-span-2">
+                            <div className="w-100 h-100">
+                                <img
+                                    className="w-100 h-100"
+                                    src={image}
+                                    style={{
+                                        objectFit: "cover",
+                                    }}
+                                    alt=""
+                                />
                             </div>
                         </div>
                     ) : null}
+                    <div className="row-start-2--lg -mr-3r mr-0--md mt-1r">
+                        {(() => {
+                            switch (questionType) {
+                                case "true-false":
+                                    return renderTrueFalseChoices();
+                                case "short-answer":
+                                    return renderShortChoices();
+                                case "multiple":
+                                default:
+                                    return renderMultipleChoices();
+                            }
+                        })()}
+                        {explain !== "" ? (
+                            <div
+                                key="explanation"
+                                className="grid question-fields wm-64r mt-1r"
+                            >
+                                <div className="flex align-center justify-center w-100 h-100">
+                                    <div className="order order--rounded2 order--shadow">
+                                        <span className="font-700">i</span>
+                                    </div>
+                                </div>
+                                <div className="flex col-start-2">
+                                    <div className="flex-1 question-input">
+                                        {explain}
+                                    </div>
+                                </div>
+                            </div>
+                        ) : null}
+                    </div>
                 </div>
-            </div>
-            <div className="flex flex-col flex-none button-field">
-                <Button
-                    className="w-3r h-3r btn-main"
-                    // onClick={() => {
-                    //     try {
-                    //         const question = createQuestionObject();
-                    //         console.log(question);
-                    //     } catch (err) {
-                    //         console.log(err);
-                    //     }
-                    // }}
-                >
-                    <FontAwesomeIcon
-                        icon={faPencilAlt}
-                        size="lg"
-                    ></FontAwesomeIcon>
-                </Button>
-                <Button
-                    className="w-3r h-3r mt-1r btn-sub"
-                    variant="outline-light"
-                    // onClick={() => deleteQuestion()}
-                >
-                    <FontAwesomeIcon
-                        icon={faTrashAlt}
-                        size="lg"
-                    ></FontAwesomeIcon>
-                </Button>
-            </div>
-        </Container>
-    );
+                <div className="flex flex-col flex-none button-field">
+                    <Button
+                        className="w-3r h-3r btn-main"
+                        onClick={() => {
+                            setIsEditing(!isEditing);
+                        }}
+                    >
+                        <FontAwesomeIcon
+                            icon={faPencilAlt}
+                            size="lg"
+                        ></FontAwesomeIcon>
+                    </Button>
+                    <Button
+                        className="w-3r h-3r mt-1r btn-sub"
+                        variant="outline-light"
+                        onClick={() => {
+                            props.onDelete(id);
+                        }}
+                    >
+                        <FontAwesomeIcon
+                            icon={faTrashAlt}
+                            size="lg"
+                        ></FontAwesomeIcon>
+                    </Button>
+                </div>
+            </Container>
+        );
+    };
+
+    const renderQuestionEditor = () => {
+        return (
+            <QuestionEditor
+                question={{ title, questionType, explain, correct, id, image, choices }}
+                questionNo={questionNo}
+                quizId={quizId}
+                onSave={props.onSave}
+                onDelete={() => {
+                    props.onDelete(id);
+                }}
+            ></QuestionEditor>
+        );
+    };
+
+    return <>{isEditing ? renderQuestionEditor() : renderQuestion()}</>;
 }

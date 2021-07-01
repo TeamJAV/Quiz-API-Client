@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Question from "./Question";
 import QuestionEditor from "./QuestionEditor";
+import { nanoid } from "nanoid";
 
 /**
  *
@@ -31,7 +32,7 @@ const fakeQuestion = [
             B: "false",
         },
         correct: ["A"],
-        questionId: "a218",
+        id: "a218",
         questionNo: 2,
         image: "https://pix10.agoda.net/hotelImages/294/294166/294166_15040615130026720872.jpg?s=1024x768",
     },
@@ -46,7 +47,7 @@ const fakeQuestion = [
             D: "fghdfghdfghdfgh",
         },
         correct: ["B", "D"],
-        questionId: "a217",
+        id: "a217",
         questionNo: 1,
         image: "https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg",
     },
@@ -62,17 +63,16 @@ const fakeQuestion = [
             E: "This is luck",
         },
         correct: ["A", "B", "C", "D", "E"],
-        questionId: "a219",
+        id: "a219",
         questionNo: 3,
         image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQp2MSeY4hViZvKC4bU5vUWamLoAKwjZrfTA&usqp=CAU",
     },
 ];
 
 export default function Quiz(props) {
-    const { quizId: pQuizId = null, quizName: pQuizName = "Untitled" } =
+    const { quizId = 3, quizName: pQuizName = "Untitled" } =
         props.quiz || {};
 
-    const [quizId, setQuizId] = useState(pQuizId);
     const [quizName, setQuizName] = useState(pQuizName);
     const [questionEditor, setQuestionEditor] = useState(
         questionEditorInitState
@@ -80,6 +80,22 @@ export default function Quiz(props) {
 
     const [questions, setQuestions] = useState(fakeQuestion);
     const quizNameInputRef = useRef();
+
+    const onDeleteQuestion = useCallback((id) => {
+        setQuestions((questions) => questions.filter((q) => q.id !== id));
+    }, []);
+
+    const onSaveEditQuestion = useCallback((editedQuestion) => {
+        console.log("save")
+        setQuestions((questions) =>
+            questions.map((q) => {
+                if (editedQuestion.id === q.id) {
+                    return editedQuestion;
+                }
+                return q;
+            })
+        );
+    }, []);
 
     useEffect(() => {
         setQuestionEditor(questionEditorInitState);
@@ -111,7 +127,12 @@ export default function Quiz(props) {
                     Save and exit
                 </Button>
             </div>
-            <ListQuestions questions={questions}></ListQuestions>
+            <ListQuestions
+                quizId={quizId}
+                questions={questions}
+                onDelete={onDeleteQuestion}
+                onSave={onSaveEditQuestion}
+            ></ListQuestions>
             {questionEditor.mode === "create" ? (
                 <QuestionEditor
                     question={questionEditor.question}
@@ -165,14 +186,18 @@ export default function Quiz(props) {
 }
 
 const ListQuestions = React.memo((props) => {
+    console.log("render List")
     return (
         <div className="question-list">
             {props.questions.map((question, index) => {
                 return (
                     <Question
-                        key={index}
+                        key={question.id}
                         question={question}
                         questionNo={index + 1}
+                        quizId={props.quizId}
+                        onDelete={props.onDelete}
+                        onSave={props.onSave}
                     ></Question>
                 );
             })}

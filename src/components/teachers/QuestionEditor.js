@@ -13,10 +13,9 @@ import {
     faTrashAlt,
     faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import { _throw } from "../../utils/utils";
+import { isURL, _throw } from "../../utils/utils";
 
 export default function QuestionEditor(props) {
-    console.log("questionEditor");
     const {
         title: pTitle = "",
         questionType: pQuestionType = "",
@@ -26,14 +25,16 @@ export default function QuestionEditor(props) {
             : { A: "", B: "", C: "", D: "" },
         correct: pCorrect = [],
         image: pImage = null,
-        id: questionId = nanoid(),
+        id: id = nanoid(), //set nanoid to NULL
     } = props.question || {};
 
     const questionNo = props.questionNo;
     const quizId = props.quizId || "";
     const [title, setTitle] = useState(pTitle);
     const [explain, setExplain] = useState(pExplain);
-    const [choices, setChoices] = useState(Object.entries(pChoices));
+    const [choices, setChoices] = useState(
+        Array.isArray(pChoices) ? pChoices : Object.entries(pChoices)
+    );
     const [correct, setCorrect] = useState(pCorrect);
     const [questionType, setQuestionType] = useState(pQuestionType);
     const [img, setImg] = useState(pImage);
@@ -49,6 +50,9 @@ export default function QuestionEditor(props) {
     );
 
     const fileInputRef = useRef(null);
+    const isImageFromURL = isURL(img);
+
+    console.log("render Editor");
 
     const handleOnClickAddAnswer = (e) => {
         console.log(correct);
@@ -161,20 +165,30 @@ export default function QuestionEditor(props) {
         question.quizId = quizId;
         question.choices = Object.fromEntries(choices);
         question.correct = correct;
-        question.img = img;
+        // if (!isImageFromURL) {
+        //     question.img = img;
+        // }
+        question.image = img;
+        if (id) {
+            question.id = id;
+        }
         return question;
     };
 
     useEffect(() => {
-        if (img) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImgPreview(reader.result);
-            };
-            reader.readAsDataURL(img);
-            console.log(img);
+        if (isImageFromURL) {
+            setImgPreview(img);
         } else {
-            setImgPreview("");
+            if (img) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setImgPreview(reader.result);
+                };
+                reader.readAsDataURL(img);
+                console.log(img);
+            } else {
+                setImgPreview("");
+            }
         }
     }, [img]);
 
@@ -370,7 +384,7 @@ export default function QuestionEditor(props) {
                     onClick={() => {
                         try {
                             const question = createQuestionObject();
-                            props.onSave(question)
+                            props.onSave(question);
                         } catch (err) {
                             console.log(err);
                         }
