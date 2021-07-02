@@ -101,6 +101,8 @@ export default function Quiz(props) {
         setQuestionEditor(questionEditorInitState);
     }, [questions]);
 
+    console.log("render Question")
+
     return (
         <Container fluid className="quiz-container px-0" id="quiz-container">
             <div
