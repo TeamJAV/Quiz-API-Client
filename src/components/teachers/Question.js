@@ -3,7 +3,6 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { _throw } from "../../utils/utils";
 import QuestionEditor from "./QuestionEditor";
 
 export default function Question(props) {
@@ -14,16 +13,14 @@ export default function Question(props) {
     const quizId = props.quizId;
     const choices = Object.entries(props.question.choices);
 
-    const [isLabelVisible, setIsLabelVisible] = useState(
-        questionType === "multiple" ? true : false
-    );
-    const [isShortAnswer, setIsShortAnswer] = useState(
-        questionType === "short-answer" ? true : false
-    );
+    const isLabelVisible = questionType === "multiple" ? true : false;
+    const isShortAnswer = questionType === "short-answer" ? true : false;
 
-    useEffect(() => {
-        if (isEditing) setIsEditing(false)
-    }, [props.question])
+    // useEffect(() => {
+    //     setIsEditing(false);
+    // }, [props.question]);
+
+    console.log(isEditing);
 
     const renderMultipleChoices = () => {
         return choices.map(([key, value], i) => {
@@ -154,7 +151,7 @@ export default function Question(props) {
                     <Button
                         className="w-3r h-3r btn-main"
                         onClick={() => {
-                            setIsEditing(!isEditing);
+                            setIsEditing(true);
                         }}
                     >
                         <FontAwesomeIcon
@@ -182,10 +179,21 @@ export default function Question(props) {
     const renderQuestionEditor = () => {
         return (
             <QuestionEditor
-                question={{ title, questionType, explain, correct, id, image, choices }}
+                question={{
+                    title,
+                    questionType,
+                    explain,
+                    correct,
+                    id,
+                    image,
+                    choices,
+                }}
                 questionNo={questionNo}
                 quizId={quizId}
-                onSave={props.onSave}
+                onSave={(question) => {
+                    props.onSave(question);
+                    setIsEditing(false);
+                }}
                 onDelete={() => {
                     props.onDelete(id);
                 }}

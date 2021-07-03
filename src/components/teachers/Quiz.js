@@ -3,7 +3,6 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Question from "./Question";
 import QuestionEditor from "./QuestionEditor";
-import { nanoid } from "nanoid";
 
 /**
  *
@@ -86,7 +85,6 @@ export default function Quiz(props) {
     }, []);
 
     const onSaveEditQuestion = useCallback((editedQuestion) => {
-        console.log("save")
         setQuestions((questions) =>
             questions.map((q) => {
                 if (editedQuestion.id === q.id) {
@@ -101,7 +99,7 @@ export default function Quiz(props) {
         setQuestionEditor(questionEditorInitState);
     }, [questions]);
 
-    console.log("render Question")
+    console.log("render Quiz")
 
     return (
         <Container fluid className="quiz-container px-0" id="quiz-container">

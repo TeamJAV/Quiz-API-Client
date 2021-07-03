@@ -18,14 +18,14 @@ import { isURL, _throw } from "../../utils/utils";
 export default function QuestionEditor(props) {
     const {
         title: pTitle = "",
-        questionType: pQuestionType = "",
+        questionType = "",
         explain: pExplain = "",
-        choices: pChoices = pQuestionType === "true-false"
+        choices: pChoices = questionType === "true-false"
             ? { A: true, B: false }
             : { A: "", B: "", C: "", D: "" },
         correct: pCorrect = [],
         image: pImage = null,
-        id: id = nanoid(), //set nanoid to NULL
+        id = nanoid(), //set nanoid to NULL
     } = props.question || {};
 
     const questionNo = props.questionNo;
@@ -36,18 +36,13 @@ export default function QuestionEditor(props) {
         Array.isArray(pChoices) ? pChoices : Object.entries(pChoices)
     );
     const [correct, setCorrect] = useState(pCorrect);
-    const [questionType, setQuestionType] = useState(pQuestionType);
     const [img, setImg] = useState(pImage);
     const [imgPreview, setImgPreview] = useState(img || "");
-    const [isLabelVisible, setIsLabelVisible] = useState(
-        questionType === "multiple" ? true : false
-    );
-    const [isChangeAnsQuantAllowed, setIsChangeAnsQuantAllowed] = useState(
-        questionType !== "true-false" ? true : false
-    );
-    const [isShortAnswer, setIsShortAnswer] = useState(
-        questionType === "short-answer" ? true : false
-    );
+
+    const isLabelVisible = questionType === "multiple" ? true : false;
+    const isChangeAnsQuantAllowed =
+        questionType !== "true-false" ? true : false;
+    const isShortAnswer = questionType === "short-answer" ? true : false;
 
     const fileInputRef = useRef(null);
     const isImageFromURL = isURL(img);
@@ -130,11 +125,6 @@ export default function QuestionEditor(props) {
         setCorrect(newCorrect);
     };
 
-    /***
-     *
-     *
-     *
-     */
     const createQuestionObject = () => {
         if (title === "") {
             _throw("I don't know what your question is");
@@ -153,7 +143,7 @@ export default function QuestionEditor(props) {
         if (questionType !== "short-answer" && correct.length === 0) {
             _throw("There must be at least one correct answer :(");
         }
-        for (const [key, value] of choices) {
+        for (const [, value] of choices) {
             if (value === "") {
                 _throw("Your answer cannot be blank!");
             }
@@ -192,11 +182,6 @@ export default function QuestionEditor(props) {
         }
     }, [img]);
 
-    /***
-     *
-     *
-     *
-     */
     return (
         <Container
             fluid
