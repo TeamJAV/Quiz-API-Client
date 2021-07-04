@@ -16,10 +16,6 @@ export default function Question(props) {
     const isLabelVisible = questionType === "multiple" ? true : false;
     const isShortAnswer = questionType === "short-answer" ? true : false;
 
-    // useEffect(() => {
-    //     setIsEditing(false);
-    // }, [props.question]);
-
     console.log(isEditing);
 
     const renderMultipleChoices = () => {
