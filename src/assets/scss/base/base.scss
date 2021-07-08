@@ -1,14 +1,19 @@
 // ------------ BUTTON ------------------- //
-button, .btn-custom {
+button,
+.btn-custom {
     border: none !important;
     border-radius: 0.5rem !important;
+}
+
+.btn-pill {
+    @include btn--pill;
 }
 
 .btn-main {
     background-color: $blue--normal;
 }
 
-.btn-sub { 
+.btn-sub {
     background-color: transparent;
     color: $blue--bold;
 }
@@ -23,11 +28,27 @@ button, .btn-custom {
     color: $white--normal;
 }
 
+.btn-label-icon {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    height: 40px;
+    outline: none;
+    padding: 0 1rem;
+    position: relative;
+}
+
 // ------------------- Input ----------------//
-input {
+
+.input-1 {
     border: none !important;
     border-radius: 0.5rem !important;
     line-height: 1.8;
+}
+
+.input-2 {
+    border: 1px solid $grey--bold;
 }
 
 ::placeholder {
@@ -96,10 +117,7 @@ input {
     opacity: 1;
 }
 
-
-
 // ---------------- Layout ----------------//
-
 
 .dp-flex {
     @include flex-vcenter;
@@ -182,6 +200,10 @@ input {
 .m-0_5r {
     margin: 0.5rem;
 }
+.py-1r {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
 .py-3r {
     padding-top: 3rem;
     padding-bottom: 3rem;
@@ -218,12 +240,25 @@ input {
         "Roboto", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }
 
+.font-display {
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Roboto", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
+.font-300 {
+    font-weight: 300;
+}
+
 .font-700 {
     font-weight: 700;
 }
 
 .text-center {
     text-align: center;
+}
+
+.text-xs {
+    font-size: 1.16667rem;
 }
 
 .text-sm {
@@ -246,8 +281,16 @@ input {
     font-size: 3.33334rem;
 }
 
+.text-header {
+    font-size: 2.5rem;
+}
+
 .text-green {
     color: $green--bold;
+}
+
+.text-blue {
+    color: $blue3--normal;
 }
 
 // ---------------- Background ----------------//
@@ -263,11 +306,19 @@ input {
     background-color: $green--light;
 }
 
+.bg-orange {
+    background-color: $orange--normal;
+}
+
 // ---------------- Box shadows & border ----------------//
 .shadow-border-t {
     box-shadow: 0 -31px 0 -30px #e7edf0;
 }
 
 .brad-_25r {
-    border-radius: 0.25rem ;
+    border-radius: 0.25rem;
 }
+
+
+// ---------------- Table & List ---------------------//
+

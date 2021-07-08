@@ -20,4 +20,12 @@ const isURL = (str) => {
     );
 };
 
-export { _throw, isURL };
+const toLocaleDateString = (dateString, region) => {
+    return new Date(dateString).toLocaleDateString(region, {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+    })
+}
+
+export { _throw, isURL, toLocaleDateString };

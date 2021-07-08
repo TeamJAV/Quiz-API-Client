@@ -11,8 +11,8 @@ import QuestionEditor from "./QuestionEditor";
 /**
  *
  * props.quiz = {
- *      quizId: ,
- *      quizName: ,
+ *      id: ,
+ *      title: ,
  * }
  */
 
@@ -69,7 +69,7 @@ const fakeQuestion = [
 ];
 
 export default function Quiz(props) {
-    const { quizId = 3, quizName: pQuizName = "Untitled" } =
+    const { id: quizId = 3, title: pQuizName = "Untitled" } =
         props.quiz || {};
 
     const [quizName, setQuizName] = useState(pQuizName);
@@ -77,7 +77,7 @@ export default function Quiz(props) {
         questionEditorInitState
     );
 
-    const [questions, setQuestions] = useState(fakeQuestion);
+    const [questions, setQuestions] = useState([]);
     const quizNameInputRef = useRef();
 
     const onDeleteQuestion = useCallback((id) => {
@@ -98,6 +98,10 @@ export default function Quiz(props) {
     useEffect(() => {
         setQuestionEditor(questionEditorInitState);
     }, [questions]);
+
+    useEffect(() => {
+        setQuestions(fakeQuestion)
+    }, [])
 
     console.log("render Quiz")
 

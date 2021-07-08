@@ -1,9 +1,9 @@
-import THomePage from './pages/THomePage'
+import TDashboard from './pages/TDashboard'
 
 function App() {
     return (
         <div className="App">
-            <THomePage></THomePage>
+            <TDashboard></TDashboard>
         </div>
     );
 }

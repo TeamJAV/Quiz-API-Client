@@ -196,7 +196,7 @@ export default function QuestionEditor(props) {
                     </div>
                     <div className="flex col-start-2">
                         <input
-                            className="flex-1 question-input"
+                            className="flex-1 question-input input-1"
                             type="text"
                             name="title"
                             value={title}
@@ -229,6 +229,7 @@ export default function QuestionEditor(props) {
                             }}
                         />
                         <input
+                            className="input-1"
                             type="file"
                             style={{
                                 display: "none",
@@ -273,6 +274,7 @@ export default function QuestionEditor(props) {
                                         <div className="checkbox">
                                             <div className="checkbox-rounded">
                                                 <input
+                                                    className="input-1"
                                                     id={key}
                                                     type="checkbox"
                                                     checked={correct.includes(
@@ -291,7 +293,7 @@ export default function QuestionEditor(props) {
                                     </div>
                                 ) : null}
                                 <input
-                                    className="flex-1 question-input"
+                                    className="flex-1 question-input input-1"
                                     type="text"
                                     name="choices"
                                     value={value}
@@ -350,7 +352,7 @@ export default function QuestionEditor(props) {
                         </div>
                         <div className="flex col-start-2">
                             <input
-                                className="flex-1 question-input"
+                                className="flex-1 question-input input-1"
                                 type="text"
                                 name="choices"
                                 value={explain}

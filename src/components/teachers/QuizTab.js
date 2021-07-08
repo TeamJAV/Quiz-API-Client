@@ -1,11 +1,19 @@
-import React from 'react'
-import Container from 'react-bootstrap/Container'
-import QuizList from './QuizList'
+import React from "react";
+import { useState } from "react";
+import Container from "react-bootstrap/Container";
+import Quiz from "./Quiz";
+import QuizList from "./QuizList";
 
 export default function QuizTab() {
+    const [selectedQuiz, setSelectedQuiz] = useState("");
+
     return (
         <Container fluid className="quiz-tab px-0">
-            <QuizList></QuizList>
+            {selectedQuiz === "" ? (
+                <QuizList onSelect={setSelectedQuiz}></QuizList>
+            ) : (
+                <Quiz quiz={selectedQuiz}></Quiz>
+            )}
         </Container>
-    )
+    );
 }

@@ -3,7 +3,7 @@ import QuizTab from "../components/teachers/QuizTab";
 import Nav from "react-bootstrap/Nav";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-export default function THomePage() {
+export default function TDashboard() {
     return (
         <Router>
             <div className="page-container page-container--sm">
