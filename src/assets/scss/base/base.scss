@@ -249,6 +249,10 @@ button,
     font-weight: 300;
 }
 
+.font-600 {
+    font-weight: 600;
+}
+
 .font-700 {
     font-weight: 700;
 }
@@ -273,6 +277,10 @@ button,
     font-size: 1.41667rem;
 }
 
+.text-smd {
+    font-size: 1.5rem;
+}
+
 .text-md {
     font-size: 1.66667rem;
 }
@@ -291,6 +299,10 @@ button,
 
 .text-blue {
     color: $blue3--normal;
+}
+
+.text-blue-bold {
+    color: $blue3--bold;
 }
 
 // ---------------- Background ----------------//
@@ -320,5 +332,13 @@ button,
 }
 
 
-// ---------------- Table & List ---------------------//
-
+// ---------------- Modal ---------------------//
+.modal-header {
+    border: none;
+    button.close {
+        padding: 5px 15px;
+    }
+    button.close > span:first-child {
+        font-size: 4rem;
+    }
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import QuizTab from "../components/teachers/QuizTab";
+import QuizTab from "../../components/teachers/QuizTab";
 import Nav from "react-bootstrap/Nav";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 

@@ -1,0 +1,50 @@
+.landing-container {
+}
+
+.modal-login {
+    .modal-body {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        padding: 0 2rem;
+    }
+
+    .modal-content {
+        border: none;
+    }
+
+    .btn-login {
+        border: 2px solid !important;
+        width: 100%;
+        margin-bottom: 30px;
+        padding: 0.75rem 0.5rem;
+        font-weight: 600;
+        background-color: $white--normal;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+            border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .btn-teacher {
+        color: $orange--bold;
+        border-color: $orange--bold;
+    }
+
+    .btn-student {
+        color: $blue3--bold;
+        border-color: $blue3--bold;
+    }
+
+    .btn-login:hover,
+    .btn-login:hover:after {
+        box-shadow: none;
+        color: $white--normal;
+        background-color: $blue2--xbold;
+    }
+
+    #btn-sign-up {
+        transition: color 0.15s ease-in-out;
+    }
+    #btn-sign-up:hover {
+        cursor: pointer;
+        color: $orange--bold;
+    }
+}

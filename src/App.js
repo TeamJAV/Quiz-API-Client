@@ -1,10 +1,11 @@
-import TDashboard from './pages/TDashboard'
+import Container from "react-bootstrap/Container";
+import { Router } from "./components/commons/Routes";
 
 function App() {
     return (
-        <div className="App">
-            <TDashboard></TDashboard>
-        </div>
+        <Container className="App">
+            <Router></Router>
+        </Container>
     );
 }
 
