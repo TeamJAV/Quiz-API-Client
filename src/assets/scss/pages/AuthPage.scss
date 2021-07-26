@@ -1,0 +1,47 @@
+.register-container,
+.login-container {
+    max-width: 512px;
+    padding: 0;
+
+    a {
+        text-decoration: underline;
+    }
+
+    h2 {
+        margin-bottom: 30px;
+    }
+
+    .form-header {
+        width: 100%;
+        .logo {
+            width: 100%;
+            max-width: 270px;
+            margin: 30px auto 10px auto;
+        }
+    }
+
+    .form-container {
+        width: 100%;
+        padding: 3rem;
+    }
+
+    .form-field {
+        margin-bottom: 15px;
+        label {
+            display: block;
+        }
+        input {
+            width: 100%;
+            line-height: 2.8;
+            background-color: $grey2--light;
+        }
+        p {
+            margin-top: 5px;
+            color: $red2--normal;
+        }
+    }
+
+    .btn-signup {
+        margin-top: 15px;
+    }
+}

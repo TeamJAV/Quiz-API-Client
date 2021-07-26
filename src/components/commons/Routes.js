@@ -30,38 +30,29 @@ const ComponentWithSubRoutesWrapper = ({ routes }) => {
     );
 };
 
-const paths = {
-    notMatch: "*",
-    home: "/",
-    login: "/login",
-    studentLogin: "/login/student",
-    teacherLogin: "/login/teacher",
-    teacherRegister: "/login/teacher/register",
-};
-
 const routes = [
     {
-        path: paths.studentLogin,
+        path: "/login/student",
         component: SLogin,
     },
     {
-        path: paths.teacherRegister,
+        path: "/login/teacher/register",
         component: TSignUp,
     },
     {
-        path: paths.teacherLogin,
+        path: "/login/teacher",
         component: TLogin,
     },
     {
-        path: paths.login,
+        path: "/login",
         component: LandingPage,
     },
     {
-        path: paths.home,
+        path: "/",
         component: LandingPage,
     },
     {
-        path: paths.notMatch,
+        path: "*",
         component: NotFound,
     },
 ];
@@ -78,4 +69,4 @@ const Router = () => {
     );
 };
 
-export { Router, paths };
+export default Router;

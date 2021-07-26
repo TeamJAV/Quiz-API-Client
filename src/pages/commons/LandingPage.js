@@ -5,7 +5,6 @@ import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
-import { paths } from "../../components/commons/Routes";
 
 export default function LandingPage() {
     const [show, setShow] = useState(false);
@@ -33,13 +32,13 @@ export default function LandingPage() {
                 <Modal.Body className="text-center">
                     <button
                         className="btn-login btn-student text-md"
-                        onClick={() => handleRedirect(paths.studentLogin)}
+                        onClick={() => handleRedirect("/login/student")}
                     >
                         Student Login
                     </button>
                     <button
                         className="btn-login btn-teacher text-md"
-                        onClick={() => handleRedirect(paths.teacherLogin)}
+                        onClick={() => handleRedirect("/login/teacher")}
                     >
                         Teacher Login
                     </button>
@@ -50,11 +49,11 @@ export default function LandingPage() {
                             marginBottom: "30px",
                         }}
                     ></hr>
-                    <p className="text-smd font-600">Don't have an account?</p>
+                    <p className="text-smd font-600">Don&apos;t have an account?</p>
                     <p
                         className="text-md font-700 text-blue-bold"
                         id="btn-sign-up"
-                        onClick={() => handleRedirect(paths.teacherRegister)}
+                        onClick={() => handleRedirect("/login/teacher/register")}
                     >
                         Sign up now!&nbsp;
                         <FontAwesomeIcon icon={faCaretRight}></FontAwesomeIcon>

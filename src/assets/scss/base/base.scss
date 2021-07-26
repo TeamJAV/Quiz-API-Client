@@ -39,7 +39,27 @@ button,
     position: relative;
 }
 
+.btn-main--orange {
+    background-color: $orange--normal;
+    color: $white--normal;
+    font-weight: 600;
+}
+
 // ------------------- Input ----------------//
+
+input:focus {
+    border: 1px solid #8bb4d3;
+    box-shadow: 0 0 0 2px rgba(139,179,211,0.4);
+}
+
+input:focus-visible {
+    outline: none;
+}
+
+input.error {
+    border: 1px solid $red2--normal;
+    box-shadow: 0 0 0 2px rgba(206,0,0,0.4);
+}
 
 .input-1 {
     border: none !important;
@@ -49,6 +69,7 @@ button,
 
 .input-2 {
     border: 1px solid $grey--bold;
+    padding: 0 14px;
 }
 
 ::placeholder {
@@ -308,6 +329,10 @@ button,
 // ---------------- Background ----------------//
 .bg-grey--light {
     background-color: $grey--light;
+}
+
+.bg-grey2--normal {
+    background-color: $grey2--normal;
 }
 
 .bg-white {

@@ -3,19 +3,9 @@ const _throw = (err) => {
 };
 
 const isURL = (str) => {
-    // const pattern = new RegExp(
-    //     "^(https?:\\/\\/)?" + // protocol
-    //         "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-    //         "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-    //         "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-    //         "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-    //         "(\\#[-a-z\\d_]*)?$",
-    //     "i"
-    // );
-    // return !!pattern.test(str);
     return (
-        typeof str === "string" && 
-        str !== null && 
+        typeof str === "string" &&
+        str !== null &&
         str.substr(0, 4) === "http"
     );
 };
@@ -28,4 +18,8 @@ const toLocaleDateString = (dateString, region) => {
     })
 }
 
-export { _throw, isURL, toLocaleDateString };
+const isObjectEmpty = (obj) => {
+    return obj && Object.keys(obj).length === 0 && obj.constructor === Object
+}
+
+export { _throw, isURL, toLocaleDateString, isObjectEmpty };
