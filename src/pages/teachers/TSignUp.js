@@ -5,7 +5,8 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.svg";
 import Modal from "../../components/commons/Modal";
-import { isObjectEmpty } from "../../utils/utils";
+import { getErrorMessage, isObjectEmpty } from "../../utils/utils";
+import { useHistory } from "react-router-dom";
 
 export default function TSignUp() {
     const [data, setData] = useState({});
@@ -17,6 +18,10 @@ export default function TSignUp() {
         </Container>
     );
 }
+
+const fetchRegisterAPI = (data) => {
+    return axios.post("/api/teacher/auth/signup", data);
+};
 
 const RegisterForm = ({ setData }) => {
     const {
@@ -91,7 +96,7 @@ const RegisterForm = ({ setData }) => {
                                         "Your password must have at least 10 characters",
                                 },
                                 pattern: {
-                                    value: "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[]:;<>,.?/~_+-=|]).{10,}$",
+                                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&].{10,}$/,
                                     message:
                                         "Your password must have at least one Uppercase, one Number and one Special Character",
                                 },
@@ -132,13 +137,12 @@ const RegisterForm = ({ setData }) => {
     );
 };
 
-const fetchRegisterAPI = (data) => {
-    return axios.post("http://127.0.0.1:8000/api/teacher/auth/signup", data);
-};
-
 const RegisterModal = ({ data }) => {
     const [show, setShow] = useState(false);
     const [modalState, setModalState] = useState({ type: "loading" }); // loading, successful, error
+    const history = useHistory();
+
+    console.log(modalState);
 
     const renderModalContent = () => {
         const content = {
@@ -146,7 +150,24 @@ const RegisterModal = ({ data }) => {
                 message: <div>Please waiting</div>,
             },
             successful: {
-                message: <div>{modalState?.message}</div>,
+                message: (
+                    <div>
+                        <p>Congratulations</p>
+                        <p>Your account has been successfully created</p>
+                        <p>
+                            ...However, you need to confirm your email address.
+                            Please check your inbox and click the link
+                            we&apos;ve sent you
+                        </p>
+                        <button
+                            type="button"
+                            className="btn-main--orange btn-signup py-1r"
+                            onClick={handleCloseModal}
+                        >
+                            Return to Login Page
+                        </button>
+                    </div>
+                ),
             },
             error: {
                 message: <div>{modalState?.message}</div>,
@@ -161,7 +182,13 @@ const RegisterModal = ({ data }) => {
 
     const handleCloseModal = () => {
         setShow(false);
-        clearModalState();
+        if (modalState.type === "successful") {
+            // setTimeout(function() {
+            history.push("/login/teacher");
+            // }, 2000)
+        } else {
+            clearModalState();
+        }
     };
 
     useEffect(() => {
@@ -169,14 +196,16 @@ const RegisterModal = ({ data }) => {
             setShow(true);
             fetchRegisterAPI(data)
                 .then((res) => {
-                    console.log(res)
-                    setModalState({ type: "successful", message: res.data.message });
+                    console.log(res);
+                    setModalState({
+                        type: "successful",
+                        message: res.data.message,
+                    });
                 })
                 .catch((err) => {
-                    console.log(err)
                     setModalState({
                         type: "error",
-                        message: err.message || "Unexpected Error",
+                        message: getErrorMessage(err),
                     });
                 });
         }
@@ -184,7 +213,7 @@ const RegisterModal = ({ data }) => {
 
     return (
         <Modal
-            state={{ show, setShow }}
+            state={{ show }}
             onShow={() => {
                 console.log("open");
             }}

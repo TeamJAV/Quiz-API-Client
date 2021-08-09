@@ -12,7 +12,7 @@ export default function QuizTab() {
             {selectedQuiz === "" ? (
                 <QuizList onSelect={setSelectedQuiz}></QuizList>
             ) : (
-                <Quiz quiz={selectedQuiz}></Quiz>
+                <Quiz quiz={selectedQuiz} setSelectedQuiz={setSelectedQuiz}></Quiz>
             )}
         </Container>
     );

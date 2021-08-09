@@ -1,10 +1,21 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import logo from "../../assets/images/logo.svg";
+import { UserContext } from "../../context/UserContext";
+import { useWhoIsLoggedIn } from "../../utils/Users";
+import { getErrorMessage } from "../../utils/utils";
 
-export default function TSignUp() {
+const fetchLoginAPI = (data) => {
+    return axios.post("/api/teacher/auth/login", data);
+};
+
+export default function TLogin() {
+    const { setUser } = useContext(UserContext);
+    const history = useHistory();
+    const whoIsLoggedIn = useWhoIsLoggedIn();
     const {
         register,
         handleSubmit,
@@ -12,12 +23,32 @@ export default function TSignUp() {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
+        fetchLoginAPI(data)
+            .then((res) => {
+                //TODO: Need studying more about how to save & secure a token on local storage -> improve this
+
+                const data = res.data.data;
+                setUser({ teacher: { info: data.user, token: data.token } });
+            })
+            .catch((err) => {
+                //TODO: Handle login errors
+
+                console.log(getErrorMessage(err));
+            });
     };
+
+    useEffect(() => {
+        if (whoIsLoggedIn === "teacher") {
+            history.push("/");
+        }
+    }, [whoIsLoggedIn, history]);
 
     return (
         <Container className="login-container text-sm">
-            <div className="form-header text-center" style={{marginBottom: "40px"}}>
+            <div
+                className="form-header text-center"
+                style={{ marginBottom: "40px" }}
+            >
                 <div className="logo">
                     <img src={logo} alt="quiz-logo" />
                 </div>
@@ -65,7 +96,10 @@ export default function TSignUp() {
                         SIGN IN
                     </button>
                 </form>
-                <div className="flex justify-between" style={{marginTop: "15px"}}>
+                <div
+                    className="flex justify-between"
+                    style={{ marginTop: "15px" }}
+                >
                     <span>Reset password</span>
                     <Link to="/login/teacher/register">Create account</Link>
                 </div>
@@ -73,4 +107,3 @@ export default function TSignUp() {
         </Container>
     );
 }
-

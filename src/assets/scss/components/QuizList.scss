@@ -2,38 +2,4 @@
     padding-left: 0;
     padding-right: 0;
     font-family: 'Open Sans', sans-serif;
-
-    .search-container {
-        padding: 1rem;
-        .input-container {
-            position: relative;
-            width: 100%;
-        }
-
-        .input-2 {
-            width: 100%;
-            line-height: 3;
-            padding-left: 45px;
-            padding-right: 40px;
-        }
-        .icon {
-            position: absolute;
-            color: $grey--bold;
-        }
-        #search-icon {
-            top: 18px;
-            left: 16px;
-        }
-        #delete-icon {
-            top: 18px;
-            right: 16px;
-        }
-        @media (min-width: 768px) {
-            .input-container {
-                max-width: 350px;
-            }
-        }
-    }
-
-
 }

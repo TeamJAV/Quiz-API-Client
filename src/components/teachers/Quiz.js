@@ -3,6 +3,13 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Question from "./Question";
 import QuestionEditor from "./QuestionEditor";
+import { useHeaderConfig } from "../../utils/Users";
+import { getErrorMessage } from "../../utils/utils";
+import axios from "axios";
+import {
+    createQuestionFormData,
+    createQuestionFromResponseAPI,
+} from "../../utils/Questions";
 
 /**
  *
@@ -19,58 +26,51 @@ import QuestionEditor from "./QuestionEditor";
 const questionEditorInitState = {
     mode: "none", // 1 - none ; 2 - create; 3 - edit
     question: { questionType: "" },
+    key: 0,
 };
 
-const fakeQuestion = [
-    {
-        title: "bangbros",
-        questionType: "true-false",
-        explain: "true-false",
-        choices: {
-            A: "true",
-            B: "false",
-        },
-        correct: ["A"],
-        id: "a218",
-        questionNo: 2,
-        image: "https://pix10.agoda.net/hotelImages/294/294166/294166_15040615130026720872.jpg?s=1024x768",
-    },
-    {
-        title: "fake taxi",
-        questionType: "multiple",
-        explain: "explain yourself",
-        choices: {
-            A: "asd",
-            B: "fghd",
-            C: "wrtwertwert",
-            D: "fghdfghdfghdfgh",
-        },
-        correct: ["B", "D"],
-        id: "a217",
-        questionNo: 1,
-        image: "https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg",
-    },
-    {
-        title: "brazzers",
-        questionType: "short-answer",
-        explain: "asdfkhjaklsd",
-        choices: {
-            A: "abc",
-            B: "zyz",
-            C: "Hotel California",
-            D: "Baby 1 more time",
-            E: "This is luck",
-        },
-        correct: ["A", "B", "C", "D", "E"],
-        id: "a219",
-        questionNo: 3,
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQp2MSeY4hViZvKC4bU5vUWamLoAKwjZrfTA&usqp=CAU",
-    },
-];
+const fetchSaveEditedQuizAPI = (id, title, config) => {
+    return axios.post(
+        `/api/teacher/quiz/edit_quiz/${id}`,
+        { quiz_title: title },
+        config
+    );
+};
 
-export default function Quiz(props) {
-    const { id: quizId = 3, title: pQuizName = "Untitled" } =
-        props.quiz || {};
+const fetchGetQuestionInQuizAPI = (id, config) => {
+    return axios.get(`/api/teacher/question/list_question/${id}`, config);
+};
+
+const fetchCreateQuestion = (id, question, config) => {
+    return axios.post(
+        `/api/teacher/question/create_question/${id}`,
+        question,
+        config
+    );
+};
+
+const fetchDeleteQuizAPI = (id, config) => {
+    return axios.post(`/api/teacher/quiz/delete_quiz/${id}`, {}, config);
+};
+
+const fetchSaveEditedQuestion = (id, question, config) => {
+    return axios.post(
+        `/api/teacher/question/edit_question/${id}`,
+        question,
+        config
+    );
+};
+
+const fetchDeleteQuestion = (id, config) => {
+    return axios.post(
+        `/api/teacher/question/delete_question/${id}`,
+        {},
+        config
+    );
+};
+
+export default function Quiz({ setSelectedQuiz,...props }) {
+    const { id: quizId, title: pQuizName } = props.quiz || {};
 
     const [quizName, setQuizName] = useState(pQuizName);
     const [questionEditor, setQuestionEditor] = useState(
@@ -79,20 +79,78 @@ export default function Quiz(props) {
 
     const [questions, setQuestions] = useState([]);
     const quizNameInputRef = useRef();
+    const headerConfig = useHeaderConfig();
 
     const onDeleteQuestion = useCallback((id) => {
-        setQuestions((questions) => questions.filter((q) => q.id !== id));
+        fetchDeleteQuestion(id, headerConfig)
+            .then((res) => {
+                setQuestions((questions) =>
+                    questions.filter((q) => q.id !== id)
+                );
+            })
+            .catch((err) => console.log(getErrorMessage(err)));
     }, []);
 
-    const onSaveEditQuestion = useCallback((editedQuestion) => {
-        setQuestions((questions) =>
-            questions.map((q) => {
-                if (editedQuestion.id === q.id) {
-                    return editedQuestion;
-                }
-                return q;
+    const onSaveEditedQuestion = useCallback((editedQuestion) => {
+        const formData = createQuestionFormData(editedQuestion);
+        fetchSaveEditedQuestion(editedQuestion.id, formData, headerConfig)
+            .then((res) => {
+                console.log(res.data.data);
+                const savedQuestion = createQuestionFromResponseAPI(
+                    res.data.data
+                );
+                setQuestions((questions) =>
+                    questions.map((q) => {
+                        if (savedQuestion.id === q.id) {
+                            return savedQuestion;
+                        }
+                        return q;
+                    })
+                );
             })
-        );
+            .catch((err) => getErrorMessage(err));
+    }, []);
+
+    const onSaveEditQuiz = useCallback(
+        (title) => {
+            if (questions.length === 0) {
+                fetchDeleteQuizAPI(quizId, headerConfig)
+                    .then(() => {
+                        setSelectedQuiz("");
+                    })
+                    .catch((err) => {
+                        console.log(getErrorMessage(err));
+                        setSelectedQuiz("");
+                    });
+            }
+            if (title === pQuizName) {
+                setSelectedQuiz("");
+                return;
+            }
+            fetchSaveEditedQuizAPI(quizId, title, headerConfig)
+                .then((res) => {
+                    setSelectedQuiz("");
+                })
+                .catch((err) => {
+                    console.log(getErrorMessage(err));
+                    setSelectedQuiz("");
+                });
+        },
+        [questions]
+    );
+
+    const onCreateQuestion = useCallback((question) => {
+        const formData = createQuestionFormData(question);
+        fetchCreateQuestion(quizId, formData, headerConfig)
+            .then((res) => {
+                setQuestions((q) => [
+                    ...q,
+                    createQuestionFromResponseAPI(res.data.data),
+                ]);
+            })
+            .catch((err) => {
+                console.log(getErrorMessage(err));
+            });
     }, []);
 
     useEffect(() => {
@@ -100,10 +158,19 @@ export default function Quiz(props) {
     }, [questions]);
 
     useEffect(() => {
-        setQuestions(fakeQuestion)
-    }, [])
-
-    console.log("render Quiz")
+        fetchGetQuestionInQuizAPI(quizId, headerConfig)
+            .then((res) => {
+                console.log(res.data.data);
+                setQuestions(
+                    res.data.data.map((question) => {
+                        return createQuestionFromResponseAPI(question);
+                    })
+                );
+            })
+            .catch((err) => {
+                console.log(getErrorMessage(err));
+            });
+    }, []);
 
     return (
         <Container fluid className="quiz-container px-0" id="quiz-container">
@@ -124,8 +191,8 @@ export default function Quiz(props) {
                 <Button
                     className="btn-save-quiz text-display"
                     id="btn-save-quiz"
-                    onClick={(e) => {
-                        console.log(quizNameInputRef.current.value);
+                    onClick={() => {
+                        onSaveEditQuiz(quizNameInputRef.current.value);
                     }}
                 >
                     Save and exit
@@ -135,18 +202,16 @@ export default function Quiz(props) {
                 quizId={quizId}
                 questions={questions}
                 onDelete={onDeleteQuestion}
-                onSave={onSaveEditQuestion}
-            ></ListQuestions>
+                onSave={onSaveEditedQuestion}
+            />
             {questionEditor.mode === "create" ? (
                 <QuestionEditor
+                    key={questionEditor.key}
                     question={questionEditor.question}
                     questionNo={questions.length + 1}
                     quizId={quizId}
                     onSave={(question) => {
-                        setQuestions((prevQuestions) => [
-                            ...prevQuestions,
-                            question,
-                        ]);
+                        onCreateQuestion(question);
                     }}
                     onDelete={() => {
                         setQuestionEditor({
@@ -154,7 +219,7 @@ export default function Quiz(props) {
                             question: { questionType: "" },
                         });
                     }}
-                ></QuestionEditor>
+                />
             ) : null}
             <div
                 className={`py-5r ${
@@ -177,6 +242,7 @@ export default function Quiz(props) {
                                 setQuestionEditor({
                                     mode: "create",
                                     question: { questionType: btn[0] },
+                                    key: questionEditor.key + 1,
                                 });
                             }}
                         >
@@ -190,7 +256,7 @@ export default function Quiz(props) {
 }
 
 const ListQuestions = React.memo((props) => {
-    console.log("render List")
+    console.log("render List");
     return (
         <div className="question-list">
             {props.questions.map((question, index) => {
@@ -202,7 +268,7 @@ const ListQuestions = React.memo((props) => {
                         quizId={props.quizId}
                         onDelete={props.onDelete}
                         onSave={props.onSave}
-                    ></Question>
+                    />
                 );
             })}
         </div>

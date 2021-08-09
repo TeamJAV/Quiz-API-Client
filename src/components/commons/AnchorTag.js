@@ -1,4 +1,6 @@
+
 import React from "react";
+import Button from "react-bootstrap/Button"
 
 export default function AnchorTag({
     value,
@@ -8,14 +10,16 @@ export default function AnchorTag({
     onClickTitle,
 }) {
     return (
-        <a
+        <Button
+            as="a"
             className="text-blue text-display"
             onClick={() => {
                 onClickTitle(id, title);
             }}
             style={{textDecoration: "underline"}}
+            bsPrefix="a"
         >
             {value}
-        </a>
+        </Button>
     );
 }

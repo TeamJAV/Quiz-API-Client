@@ -1,19 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
-import { nanoid } from "nanoid";
-import {
-    nextAnswerIdAlphabet,
-    prevAnswerIdAlphabet,
-} from "../../utils/Questions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faTimes,
-    faCheck,
-    faTrashAlt,
-    faPlus,
-} from "@fortawesome/free-solid-svg-icons";
-import { isURL, _throw } from "../../utils/utils";
+import {nanoid} from "nanoid";
+import {nextAnswerIdAlphabet, prevAnswerIdAlphabet,} from "../../utils/Questions";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCheck, faPlus, faTimes, faTrashAlt,} from "@fortawesome/free-solid-svg-icons";
+import {_throw, isURL} from "../../utils/utils";
 
 export default function QuestionEditor(props) {
     const {
@@ -21,8 +13,8 @@ export default function QuestionEditor(props) {
         questionType = "",
         explain: pExplain = "",
         choices: pChoices = questionType === "true-false"
-            ? { A: true, B: false }
-            : { A: "", B: "", C: "", D: "" },
+            ? {A: true, B: false}
+            : {A: "", B: "", C: "", D: ""},
         correct: pCorrect = [],
         image: pImage = null,
         id = nanoid(), //set nanoid to NULL
@@ -39,15 +31,13 @@ export default function QuestionEditor(props) {
     const [img, setImg] = useState(pImage);
     const [imgPreview, setImgPreview] = useState(img || "");
 
-    const isLabelVisible = questionType === "multiple" ? true : false;
-    const isChangeAnsQuantAllowed =
-        questionType !== "true-false" ? true : false;
-    const isShortAnswer = questionType === "short-answer" ? true : false;
+    const isLabelVisible = questionType === "multiple";
+    const isChangeAnsQuantAllowed = questionType !== "true-false";
+    const isShortAnswer = questionType === "short-answer";
 
     const fileInputRef = useRef(null);
     const isImageFromURL = isURL(img);
 
-    console.log("render Editor");
 
     const handleOnClickAddAnswer = (e) => {
         console.log(correct);
@@ -180,7 +170,7 @@ export default function QuestionEditor(props) {
                 setImgPreview("");
             }
         }
-    }, [img]);
+    }, [img, isImageFromURL]);
 
     return (
         <Container
@@ -204,7 +194,7 @@ export default function QuestionEditor(props) {
                                 setTitle(e.target.value);
                             }}
                             placeholder="Have a question to ask?"
-                        ></input>
+                        />
                     </div>
                 </div>
                 <div className="image-field col-start-2--lg row-span-2">
@@ -250,7 +240,7 @@ export default function QuestionEditor(props) {
                             setImg(null);
                         }}
                     >
-                        <FontAwesomeIcon icon={faTimes}></FontAwesomeIcon>
+                        <FontAwesomeIcon icon={faTimes}/>
                     </div>
                 </div>
                 <div className="row-start-2--lg -mr-3r mr-0--md mt-1r">

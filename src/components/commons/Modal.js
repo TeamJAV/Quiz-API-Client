@@ -2,7 +2,7 @@ import React from "react";
 import { default as BModal } from "react-bootstrap/Modal";
 
 export default function Modal({
-    state: { show, setShow },
+    state: { show },
     backdrop = true,
     onShow,
     onHide,

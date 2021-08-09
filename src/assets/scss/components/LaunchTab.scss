@@ -1,0 +1,103 @@
+.launch-tab {
+    .pgb .step {
+        text-align: center;
+        position: relative;
+    }
+    .pgb p {
+        font-size: 1.41667rem;
+    }
+    .pgb .step p {
+        position: absolute;
+        height: 60px;
+        width: 100%;
+        text-align: center;
+        display: block;
+        z-index: 3;
+        color: #fff;
+        font-size: 160%;
+        line-height: 55px;
+    }
+    .pgb .active.step p {
+        opacity: 1;
+        font-weight: 600;
+    }
+    .pgb .img-circle {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: $grey--normal;
+        border: 4px solid #fff;
+    }
+    .pgb .complete .img-circle {
+        background-color: $blue--normal;
+    }
+    .pgb .active .img-circle {
+        background-color: #ff9800;
+    }
+    .pgb .step .img-circle:before {
+        content: "";
+        display: block;
+        background: $grey--normal;
+        height: 4px;
+        width: 50%;
+        position: absolute;
+        bottom: 50%;
+        left: 0;
+        z-index: -1;
+        margin-right: 24px;
+    }
+    .pgb .step .img-circle:after {
+        content: "";
+        display: block;
+        background: $grey--normal;
+        height: 4px;
+        width: 50%;
+        position: absolute;
+        bottom: 50%;
+        left: 50%;
+        z-index: -1;
+    }
+
+    .pgb .step.active .img-circle:after {
+        background: $grey--normal;
+    }
+
+    .pgb .step.complete .img-circle:after,
+    .pgb .step.complete .img-circle:before,
+    .pgb .step.active .img-circle:before {
+        background: $blue--normal;
+    }
+
+    .pgb .step:last-of-type .img-circle:after,
+    .pgb .step:first-of-type .img-circle:before {
+        display: none;
+    }
+
+    .btn-dec {
+        border: 2px solid $orange--normal !important;
+        color: $orange--normal;
+        background-color: $white--normal;
+    }
+
+    .btn-dec:hover, .btn-dec:focus {
+        background-color: $orange--normal;
+        color: $white--normal;
+    }
+
+    .btn-custom--2 {
+        min-width: 100px;
+        margin: 0 5px;
+        font-weight: 600;
+    }
+
+    .settings-container table {
+        margin: 0 auto;
+        vertical-align: middle;
+    }
+
+    .loading-container {
+        position: relative;
+        text-align: center;
+    }
+}

@@ -5,6 +5,11 @@ button,
     border-radius: 0.5rem !important;
 }
 
+.btn-custom--2 {
+    border-radius: 0.5rem;
+    min-width: 80px;
+}
+
 .btn-pill {
     @include btn--pill;
 }
@@ -45,11 +50,28 @@ button,
     font-weight: 600;
 }
 
+.btn-custom--disabled {
+    background-color: $grey--normal;
+    color: $white--normal;
+}
+.btn-custom--disabled:hover {
+    background-color: $grey--normal;
+    color: $white--normal;
+}
+.btn-custom--disabled:focus {
+    background-color: $grey--normal;
+    color: $white--normal;
+}   
+.btn-custom--disabled:active {
+    background-color: $grey--normal !important;
+    color: $white--normal !important;
+}
+
 // ------------------- Input ----------------//
 
 input:focus {
     border: 1px solid #8bb4d3;
-    box-shadow: 0 0 0 2px rgba(139,179,211,0.4);
+    box-shadow: 0 0 0 2px rgba(139, 179, 211, 0.4);
 }
 
 input:focus-visible {
@@ -58,7 +80,7 @@ input:focus-visible {
 
 input.error {
     border: 1px solid $red2--normal;
-    box-shadow: 0 0 0 2px rgba(206,0,0,0.4);
+    box-shadow: 0 0 0 2px rgba(206, 0, 0, 0.4);
 }
 
 .input-1 {
@@ -318,6 +340,10 @@ input.error {
     color: $green--bold;
 }
 
+.text-grey {
+    color: $grey--normal;
+}
+
 .text-blue {
     color: $blue3--normal;
 }
@@ -355,7 +381,6 @@ input.error {
 .brad-_25r {
     border-radius: 0.25rem;
 }
-
 
 // ---------------- Modal ---------------------//
 .modal-header {

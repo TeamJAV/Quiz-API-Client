@@ -1,57 +1,112 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import QuizTab from "../../components/teachers/QuizTab";
 import Nav from "react-bootstrap/Nav";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    useHistory,
+    useLocation,
+    NavLink,
+} from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
+import { useWhoIsLoggedIn } from "../../utils/Users";
+import RoomTab from "../../components/teachers/RoomTab";
+import LaunchTab from "../../components/teachers/LaunchTab";
+import Button from "react-bootstrap/Button";
+import axios from "axios";
+import { useHeaderConfig } from "../../utils/Users";
+import { getErrorMessage } from "../../utils/utils";
 
-export default function TDashboard() {
+const getCurrentActiveKey = (location) => {
+    const strSplit = location.split("/");
+    if (strSplit.length < 3) return "quizzes";
+    return strSplit[2];
+};
+
+function TDashboard() {
+    const { setUser } = useContext(UserContext);
+
+    const history = useHistory();
+    const location = useLocation();
+    const whoIsLoggedIn = useWhoIsLoggedIn();
+    const headerConfig = useHeaderConfig();
+
+    useEffect(() => {
+        if (whoIsLoggedIn !== "teacher") {
+            history.push("/login/teacher");
+        }
+    }, [history, whoIsLoggedIn]);
+
+    const handleLogOut = (e) => {
+        axios
+            .post("/api/teacher/auth/logout", {}, headerConfig)
+            .then(() => {
+                setUser(null);
+            })
+            .catch((err) => alert(getErrorMessage(err)));
+    };
+
     return (
         <Router>
             <div className="page-container page-container--sm">
-                <Nav variant="tabs" defaultActiveKey="quizzes">
-                    <Nav.Item>
-                        <Nav.Link eventKey="launch" as={Link} to="/launch">
+                <Nav
+                    variant="tabs"
+                    defaultActiveKey={getCurrentActiveKey(location.pathname)}
+                    as="ul"
+                >
+                    <Nav.Item as="li">
+                        <NavLink className="nav-link" to="/teacher/launch">
                             Launch
-                        </Nav.Link>
+                        </NavLink>
                     </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link eventKey="quizzes" as={Link} to="/quizzes">
+                    <Nav.Item as="li">
+                        <NavLink className="nav-link" to="/teacher/quizzes">
                             Quizzes
-                        </Nav.Link>
+                        </NavLink>
                     </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link eventKey="rooms" as={Link} to="/rooms">
+                    <Nav.Item as="li">
+                        <NavLink className="nav-link" to="/teacher/rooms">
                             Rooms
-                        </Nav.Link>
+                        </NavLink>
                     </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link eventKey="reports" as={Link} to="/reports">
+                    <Nav.Item as="li">
+                        <NavLink className="nav-link" to="/teacher/reports">
                             Reports
-                        </Nav.Link>
+                        </NavLink>
                     </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link eventKey="results" as={Link} to="/results">
+                    <Nav.Item as="li">
+                        <NavLink className="nav-link" to="/teacher/results">
                             Results
-                        </Nav.Link>
+                        </NavLink>
                     </Nav.Item>
+                    <Button type="button" onClick={handleLogOut}>
+                        Log out
+                    </Button>
                 </Nav>
                 <Switch>
-                    <Route path="/launch">
-                        <div>Launch</div>
+                    <Route path="/teacher/launch">
+                        <LaunchTab></LaunchTab>
                     </Route>
-                    <Route path="/quizzes">
+                    <Route path="/teacher/quizzes">
                         <QuizTab></QuizTab>
                     </Route>
-                    <Route path="/rooms">
-                        <div>Rooms</div>
+                    <Route path="/teacher/rooms">
+                        <RoomTab></RoomTab>
                     </Route>
-                    <Route path="/reports">
+                    <Route path="/teacher/reports">
                         <div>Reports</div>
                     </Route>
-                    <Route path="/results">
-                        <div>Results</div>
+                    <Route path="/teacher/results">
+                        <div>Live Results</div>
+                    </Route>
+                    <Route path="/teacher/">
+                        <QuizTab></QuizTab>
                     </Route>
                 </Switch>
             </div>
         </Router>
     );
 }
+
+export default TDashboard;

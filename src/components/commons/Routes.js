@@ -4,6 +4,8 @@ import TSignUp from "../../pages/teachers/TSignUp";
 import SLogin from "../../pages/students/SLogin";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import NotFound from "../../pages/commons/NotFound";
+import TDashboard from "../../pages/teachers/TDashboard";
+import SDashboard from "../../pages/students/SDashboard";
 
 const RouteWithSubRoutes = (route) => {
     return (
@@ -20,17 +22,25 @@ const RouteWithSubRoutes = (route) => {
     );
 };
 
-const ComponentWithSubRoutesWrapper = ({ routes }) => {
-    return (
-        <Switch>
-            {routes.map((route, i) => (
-                <RouteWithSubRoutes key={i} {...route} />
-            ))}
-        </Switch>
-    );
-};
+// const ComponentWithSubRoutesWrapper = ({ routes }) => {
+//     return (
+//         <Switch>
+//             {routes.map((route, i) => (
+//                 <RouteWithSubRoutes key={i} {...route} />
+//             ))}
+//         </Switch>
+//     );
+// };
 
 const routes = [
+    {
+        path: "/student",
+        component: SDashboard,
+    },
+    {
+        path: "/teacher",
+        component: TDashboard,
+    },
     {
         path: "/login/student",
         component: SLogin,

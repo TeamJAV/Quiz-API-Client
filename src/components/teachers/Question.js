@@ -16,8 +16,6 @@ export default function Question(props) {
     const isLabelVisible = questionType === "multiple" ? true : false;
     const isShortAnswer = questionType === "short-answer" ? true : false;
 
-    console.log(isEditing);
-
     const renderMultipleChoices = () => {
         return choices.map(([key, value], i) => {
             const isCorrect = correct.includes(key);

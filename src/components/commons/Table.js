@@ -1,6 +1,6 @@
 import React from "react";
 import BTable from 'react-bootstrap/Table'
-import { useTable, useRowSelect, useSortBy } from "react-table";
+import { useTable, useSortBy } from "react-table";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -11,36 +11,7 @@ const Table = ({ data, columns, onClickTitle }) => {
         headerGroups,
         rows,
         prepareRow,
-        selectedFlatRows,
-        state: { selectedRowIds },
-    } = useTable({ columns, data, onClickTitle }, useSortBy, useRowSelect, (hooks) => {
-        hooks.visibleColumns.push((columns) => [
-            // Let's make a column for selection
-            {
-                id: "selection",
-                // The header can use the table's getToggleAllRowsSelectedProps method
-                // to render a checkbox
-                Header: ({ getToggleAllRowsSelectedProps }) => (
-                    <div className="flex">
-                        <IndeterminateCheckbox
-                            {...getToggleAllRowsSelectedProps()}
-                        />
-                        <span style={{marginLeft: "9px"}}>ALL</span>
-                    </div>
-                ),
-                // The cell can use the individual row's getToggleRowSelectedProps method
-                // to the render a checkbox
-                Cell: ({ row }) => (
-                    <div className="flex">
-                        <IndeterminateCheckbox
-                            {...row.getToggleRowSelectedProps()}
-                        />
-                    </div>
-                ),
-            },
-            ...columns,
-        ]);
-    });
+    } = useTable({ columns, data, onClickTitle }, useSortBy);
 
     return (
         <BTable {...getTableProps()} className="r-table">
@@ -48,7 +19,6 @@ const Table = ({ data, columns, onClickTitle }) => {
                 {headerGroups.map((headerGroup) => ( 
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map((column) => {
-                            // console.log(column);
                             return (
                                 <th
                                     {...column.getHeaderProps(
@@ -98,20 +68,3 @@ const Table = ({ data, columns, onClickTitle }) => {
 };
 
 export default Table
-
-const IndeterminateCheckbox = React.forwardRef(
-    ({ indeterminate, ...rest }, ref) => {
-        const defaultRef = React.useRef();
-        const resolvedRef = ref || defaultRef;
-
-        React.useEffect(() => {
-            resolvedRef.current.indeterminate = indeterminate;
-        }, [resolvedRef, indeterminate]);
-
-        return (
-            <>
-                <input type="checkbox" ref={resolvedRef} {...rest} />
-            </>
-        );
-    }
-);
