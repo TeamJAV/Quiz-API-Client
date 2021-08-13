@@ -7,7 +7,7 @@ function App() {
     return (
         <UserProvider>
             <RoomProvider>
-                <Container className="App">
+                <Container fluid className="App no-pd">
                     <Router></Router>
                 </Container>
             </RoomProvider>

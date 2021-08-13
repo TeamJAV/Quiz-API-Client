@@ -1,0 +1,18 @@
+.header {
+    background-color: $blue--light;
+    padding: 2rem 0 2rem 0;
+    p {
+        margin-bottom: 0;
+    }
+    .mb-20 {
+        margin-bottom: 20px;
+    }
+
+    .logo {
+        font-size: 2rem;
+    }
+}
+
+.header-teacher {
+    padding-bottom: 5rem;
+}

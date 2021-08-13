@@ -16,23 +16,21 @@ const useWhoIsLoggedIn = () => {
 
 const useHeaderConfig = (role = "teacher") => {
     const { user } = useContext(UserContext);
-    let token = "";
-    const whoIsLoggedIn = useWhoIsLoggedIn()
+    const { room } = useContext(RoomContext);
+    let headers = {};
+    const whoIsLoggedIn = useWhoIsLoggedIn();
     if (role === "teacher" && whoIsLoggedIn === "teacher") {
-        token = user.teacher.token.access_token;
+        const token = user.teacher.token.access_token;
+        headers = { Authorization: `Bearer ${token}` };
     }
-    // const headers = useMemo(
-    //     () => ({
-    //         headers: {
-    //             Authorization: `Bearer ${token}`,
-    //         },
-    //     }),
-    //     [token]
-    // );
+    if (role === "student" && whoIsLoggedIn === "student") {
+        headers = {
+            r_id: room.r_id,
+            rd_id: user.student.rd_id,
+        };
+    }
     return {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
+        headers: headers,
     };
 };
 

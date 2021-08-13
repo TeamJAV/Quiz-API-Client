@@ -100,4 +100,17 @@
         position: relative;
         text-align: center;
     }
+
+    .stage-1 {
+        padding-top: 70px;
+        img {
+            width: 150px;
+            height: 150px;
+        }
+    }
+
+    .stage-indicator {
+        padding-top: 2rem;
+        margin-bottom: 2rem;
+    }
 }

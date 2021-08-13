@@ -17,6 +17,9 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useHeaderConfig } from "../../utils/Users";
 import { getErrorMessage } from "../../utils/utils";
+import ResultTab from "../../components/teachers/ResultTab";
+import Header from "../../components/commons/Header";
+import LiveResult from "../../components/teachers/LiveResult";
 
 const getCurrentActiveKey = (location) => {
     const strSplit = location.split("/");
@@ -28,7 +31,6 @@ function TDashboard() {
     const { setUser } = useContext(UserContext);
 
     const history = useHistory();
-    const location = useLocation();
     const whoIsLoggedIn = useWhoIsLoggedIn();
     const headerConfig = useHeaderConfig();
 
@@ -49,19 +51,33 @@ function TDashboard() {
 
     return (
         <Router>
-            <div className="page-container page-container--sm">
-                <Nav
-                    variant="tabs"
-                    defaultActiveKey={getCurrentActiveKey(location.pathname)}
-                    as="ul"
+            <Header>
+                <Button
+                    onClick={handleLogOut}
+                    as="a"
+                    className="text-white"
+                    bsPrefix="a"
+                    style={{ textDecoration: "underline" }}
                 >
+                    Log out
+                </Button>
+            </Header>
+            <div className="page-container page-container--sm text-base">
+                <Nav variant="tabs" as="ul" className="nav-custom text-white">
                     <Nav.Item as="li">
                         <NavLink className="nav-link" to="/teacher/launch">
                             Launch
                         </NavLink>
                     </Nav.Item>
                     <Nav.Item as="li">
-                        <NavLink className="nav-link" to="/teacher/quizzes">
+                        <NavLink
+                            className="nav-link"
+                            to="/teacher/quizzes"
+                            isActive={(match, location) => {
+                                const regex = new RegExp("^/teacher/?$");
+                                return match || regex.test(location.pathname);
+                            }}
+                        >
                             Quizzes
                         </NavLink>
                     </Nav.Item>
@@ -80,9 +96,6 @@ function TDashboard() {
                             Results
                         </NavLink>
                     </Nav.Item>
-                    <Button type="button" onClick={handleLogOut}>
-                        Log out
-                    </Button>
                 </Nav>
                 <Switch>
                     <Route path="/teacher/launch">
@@ -97,8 +110,11 @@ function TDashboard() {
                     <Route path="/teacher/reports">
                         <div>Reports</div>
                     </Route>
+                    <Route path="/teacher/results/:id">
+                        <LiveResult></LiveResult>
+                    </Route>
                     <Route path="/teacher/results">
-                        <div>Live Results</div>
+                        <ResultTab></ResultTab>
                     </Route>
                     <Route path="/teacher/">
                         <QuizTab></QuizTab>

@@ -1,0 +1,46 @@
+.live-result-container {
+    table {
+        border-collapse: separate;
+        border-spacing: 5px;
+
+        thead tr th:first-child,
+        tbody tr td:first-child {
+            width: 25rem;
+            padding: 5px 12px;
+        }
+
+        td {
+            padding: 5px 12px;
+        }
+
+        td.true {
+            background-color: $green2--light;
+            color: $green2--bold;
+        }
+
+        td.false {
+            background-color: $pink--light;
+            color: $red2--normal;
+        }
+
+        td,
+        th {
+            min-width: 7rem;
+            text-align: center;
+            border-radius: 3px;
+        }
+        th.multiple {
+            border-bottom: 2px solid $yellow--normal;
+        }
+        th.short-answer {
+            border-bottom: 2px solid $red--normal;
+        }
+        th.true-false {
+            border-bottom: 2px solid $blue2--normal;
+        }
+
+        tbody td {
+            background-color: $grey--light;
+        }
+    }
+}

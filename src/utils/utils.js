@@ -22,7 +22,8 @@ const isObjectEmpty = (obj) => {
 
 const getErrorMessage = (error) => {
     return (
-        error?.response?.data?.message || "Unexpected Error. Please try again later"
+        // error?.response?.data?.message || "Unexpected Error. Please try again later"
+        error?.response?.data?.message || error
     );
 };
 

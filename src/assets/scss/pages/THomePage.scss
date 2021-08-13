@@ -3,6 +3,16 @@
     min-width: 300px;
     margin: 0px;
     padding: 0px;
+    position: relative;
+    .nav-custom {
+        position: absolute;
+        top: 0;
+        left: 2rem;
+        transform: translateY(-100%);
+        a {
+            color: $grey--normal;
+        }
+    }
 }
 
 @media (min-width: 480px) {

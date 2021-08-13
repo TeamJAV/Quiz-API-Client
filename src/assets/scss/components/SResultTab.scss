@@ -1,0 +1,11 @@
+.s-result-tab {
+    table {
+        margin: 0 auto;
+    }
+    table > tbody > tr > td {
+        text-align: right;
+    }
+    table > tbody > tr > td:first-child {
+        text-align: left;
+    }
+}

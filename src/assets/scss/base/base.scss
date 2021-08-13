@@ -44,6 +44,11 @@ button,
     position: relative;
 }
 
+.btn-finish {
+    color: $red--normal;
+    background-color: $red--light;
+}
+
 .btn-main--orange {
     background-color: $orange--normal;
     color: $white--normal;
@@ -61,7 +66,7 @@ button,
 .btn-custom--disabled:focus {
     background-color: $grey--normal;
     color: $white--normal;
-}   
+}
 .btn-custom--disabled:active {
     background-color: $grey--normal !important;
     color: $white--normal !important;
@@ -234,6 +239,9 @@ input.error {
 .mb-1r {
     margin-bottom: 1rem;
 }
+.mb-2r {
+    margin-bottom: 2rem;
+}
 .mt-0_5r {
     margin-top: 0.5rem;
 }
@@ -254,6 +262,10 @@ input.error {
 .py-5r {
     padding-top: 5rem;
     padding-bottom: 5rem;
+}
+
+.no-pd {
+    padding: 0;
 }
 @media (min-width: 640px) {
     .mr-0--md {
@@ -378,6 +390,10 @@ input.error {
     box-shadow: 0 -31px 0 -30px #e7edf0;
 }
 
+.shadow-border-b {
+    box-shadow: 0 1px 0 0px #e7edf0;
+}
+
 .brad-_25r {
     border-radius: 0.25rem;
 }
@@ -391,4 +407,9 @@ input.error {
     button.close > span:first-child {
         font-size: 4rem;
     }
+}
+
+.container, .container-fluid {
+    padding-left: 0px;
+    padding-right: 0px;
 }

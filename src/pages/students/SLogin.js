@@ -50,6 +50,7 @@ export default function TSignUp() {
         axios
             .post("/api/student/join-room", data)
             .then((res) => {
+                console.log(res)
                 setRoom({ r_id: res.data.data.r_id, name: data.name });
                 setStage((s) => (s += 1));
             })
@@ -65,6 +66,7 @@ export default function TSignUp() {
             })
             .then((res) => {
                 const data = res.data.data;
+                console.log(data)
                 setRoom((r) => ({ ...r, ...data.room }));
                 setUser({ student: { ...data.result_detail } });
             })

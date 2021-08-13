@@ -11,6 +11,7 @@ import SearchInput from "../commons/SearchInput";
 import ReactSwitch from "react-switch";
 import HashLoader from "react-spinners/HashLoader";
 import { useHistory } from "react-router-dom";
+import star from "../../assets/images/star.png";
 
 const getClassNameByCurrentStage = (indicator, currentStage) => {
     if (currentStage > indicator) return "complete";
@@ -235,7 +236,9 @@ export default function LaunchTab() {
             axios
                 .post("/api/teacher/room/launch", bodyData, headerConfig)
                 .then((res) => {
-                    setTimeout(function () {history.push("/teacher/results")}, 2000)
+                    setTimeout(function () {
+                        history.push("/teacher/results");
+                    }, 2000);
                 })
                 .catch((err) => alert(getErrorMessage(err)));
         }
@@ -271,87 +274,97 @@ export default function LaunchTab() {
     return (
         <Container fluid className="launch-tab px-0">
             {stage > 0 ? (
-                <div className="stage-indicator">
-                    <div className="row pgb p-0 mt-3">
-                        <div
-                            className={
-                                `col step p-0 ` +
-                                getClassNameByCurrentStage(1, stage)
-                            }
-                        >
-                            <p>1</p>
-                            <span className="img-circle"></span>
-                        </div>
-                        <div
-                            className={
-                                `col step p-0 ` +
-                                getClassNameByCurrentStage(2, stage)
-                            }
-                        >
-                            <p>2</p>
-                            <span className="img-circle"></span>
-                        </div>
-                        <div
-                            className={
-                                `col step p-0 ` +
-                                getClassNameByCurrentStage(3, stage)
-                            }
-                        >
-                            <p>3</p>
-                            <span className="img-circle"></span>
-                        </div>
-                    </div>
-                    <div className="row pgb p-0">
-                        <div className="col text-center">
-                            <p>Choose a Quiz</p>
-                        </div>
-                        <div className="col text-center">
-                            <p>Choose a Room</p>
-                        </div>
-                        <div className="col text-center active">
-                            <p>Choose Delivery Method and Settings</p>
-                        </div>
-                    </div>
-                    {renderContentByStage()}
-                    {!isLoading ? (
-                        <div className="flex justify-center">
-                            <Button
-                                className="btn-custom--2 btn-dec py-1r"
-                                onClick={decStage}
+                <>
+                    <div className="stage-indicator">
+                        <div className="row pgb p-0 mt-3">
+                            <div
+                                className={
+                                    `col step p-0 ` +
+                                    getClassNameByCurrentStage(1, stage)
+                                }
                             >
-                                {stage === 1 ? "CANCEL" : "BACK"}
-                            </Button>
-                            {isCurrentStageComplete() ? (
+                                <p>1</p>
+                                <span className="img-circle"></span>
+                            </div>
+                            <div
+                                className={
+                                    `col step p-0 ` +
+                                    getClassNameByCurrentStage(2, stage)
+                                }
+                            >
+                                <p>2</p>
+                                <span className="img-circle"></span>
+                            </div>
+                            <div
+                                className={
+                                    `col step p-0 ` +
+                                    getClassNameByCurrentStage(3, stage)
+                                }
+                            >
+                                <p>3</p>
+                                <span className="img-circle"></span>
+                            </div>
+                        </div>
+                        <div className="row pgb p-0 mb">
+                            <div className="col text-center">
+                                <p>Choose a Quiz</p>
+                            </div>
+                            <div className="col text-center">
+                                <p>Choose a Room</p>
+                            </div>
+                            <div className="col text-center active">
+                                <p>Choose Delivery Method and Settings</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="stage-content">
+                        {renderContentByStage()}
+                        {!isLoading ? (
+                            <div className="flex justify-center">
                                 <Button
-                                    className="btn-custom--2 btn-inc py-1r bg-orange"
-                                    onClick={incStage}
+                                    className="btn-custom--2 btn-dec py-1r"
+                                    onClick={decStage}
                                 >
-                                    {stage === 3 ? "LAUNCH" : "NEXT"}
+                                    {stage === 1 ? "CANCEL" : "BACK"}
                                 </Button>
-                            ) : (
-                                <Button className="btn-custom--2 btn-custom--disabled">
-                                    NEXT
-                                </Button>
-                            )}
-                        </div>
-                    ) : (
-                        <div className="loading-container">
-                            <HashLoader
-                                color={"#ffa100"}
-                                size={100}
-                                css={{ display: "block", margin: "100px auto" }}
-                            />
-                            <p className="text-smd">
-                                Please wait a moment. Your room is being
-                                launched
-                            </p>
-                        </div>
-                    )}
-                </div>
+                                {isCurrentStageComplete() ? (
+                                    <Button
+                                        className="btn-custom--2 btn-inc py-1r bg-orange"
+                                        onClick={incStage}
+                                    >
+                                        {stage === 3 ? "LAUNCH" : "NEXT"}
+                                    </Button>
+                                ) : (
+                                    <Button className="btn-custom--2 btn-custom--disabled">
+                                        NEXT
+                                    </Button>
+                                )}
+                            </div>
+                        ) : (
+                            <div className="loading-container">
+                                <HashLoader
+                                    color={"#ffa100"}
+                                    size={100}
+                                    css={{
+                                        display: "block",
+                                        margin: "100px auto",
+                                    }}
+                                />
+                                <p className="text-smd">
+                                    Please wait a moment. Your room is being
+                                    launched
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                </>
             ) : (
-                <div>
+                <div className="text-center stage-1">
+                    <img src={star} alt=""></img>
                     <h1>Quiz Online</h1>
-                    <div>Select a room with quiz to launch an online exam</div>
+                    <div style={{ margin: "20px 0" }}>
+                        Select a room with quiz to launch an online exam
+                    </div>
                     <Button
                         className="btn-pill py-1r bg-orange"
                         onClick={incStage}
