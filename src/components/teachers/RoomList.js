@@ -225,6 +225,7 @@ const RoomNameModal = ({ roomData, setRoomData, handleSubmit }) => {
                 onChange={(e) => {
                     setName(e.target.value);
                 }}
+                style={{width: "100%", marginBottom: "30px"}}
             ></input>
             <div className="flex">
                 <Button
