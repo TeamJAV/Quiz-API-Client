@@ -90,7 +90,7 @@ const List = ({
                 );
             })
             .catch((err) => {
-                console.log(getErrorMessage(err));
+                alert(getErrorMessage(err));
             });
     }, []);
 

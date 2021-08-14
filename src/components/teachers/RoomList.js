@@ -45,7 +45,7 @@ export default function RoomList() {
                 setRooms(res.data.data.room);
             })
             .catch((err) => {
-                console.log(getErrorMessage(err));
+                alert(getErrorMessage(err));
             });
     }, []);
 
@@ -56,7 +56,7 @@ export default function RoomList() {
     const handleDeleteRoom = useCallback((id) => {
         fetchDeleteRoom(id, headerConfig)
             .then((res) => setRooms(r => r.filter((room) => room.id !== id)))
-            .catch((err) => console.log(getErrorMessage(err)));
+            .catch((err) => alert(getErrorMessage(err)));
     }, [headerConfig]);
 
     const createRoom = (name) => {
@@ -65,7 +65,7 @@ export default function RoomList() {
                 setRoomModalData(null);
                 setRooms([...rooms, res.data.data]);
             })
-            .catch((err) => console.log(getErrorMessage(err)));
+            .catch((err) => alert(getErrorMessage(err)));
     };
 
     const updateRoom = (name) => {
@@ -84,7 +84,7 @@ export default function RoomList() {
                     )
                 );
             })
-            .catch((err) => console.log(getErrorMessage(err)));
+            .catch((err) => alert(getErrorMessage(err)));
     };
 
     const columns = useMemo(

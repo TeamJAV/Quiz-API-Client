@@ -49,7 +49,7 @@ export default function ResultTab() {
                     <td>{result?.time_joined || ""}</td>
                 </tr>
                 <tr>
-                    <td>Finised at:</td>
+                    <td>Finished at:</td>
                     <td>{result?.time_end || ""}</td>
                 </tr>
                 <tr>

@@ -33,7 +33,7 @@ export default function TLogin() {
             .catch((err) => {
                 //TODO: Handle login errors
 
-                console.log(getErrorMessage(err));
+                alert(getErrorMessage(err));
             });
     };
 

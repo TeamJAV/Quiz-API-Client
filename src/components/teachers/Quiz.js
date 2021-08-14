@@ -88,7 +88,7 @@ export default function Quiz({ setSelectedQuiz,...props }) {
                     questions.filter((q) => q.id !== id)
                 );
             })
-            .catch((err) => console.log(getErrorMessage(err)));
+            .catch((err) => alert(getErrorMessage(err)));
     }, []);
 
     const onSaveEditedQuestion = useCallback((editedQuestion) => {
@@ -119,7 +119,7 @@ export default function Quiz({ setSelectedQuiz,...props }) {
                         setSelectedQuiz("");
                     })
                     .catch((err) => {
-                        console.log(getErrorMessage(err));
+                        alert(getErrorMessage(err));
                         setSelectedQuiz("");
                     });
             }
@@ -132,7 +132,7 @@ export default function Quiz({ setSelectedQuiz,...props }) {
                     setSelectedQuiz("");
                 })
                 .catch((err) => {
-                    console.log(getErrorMessage(err));
+                    alert(getErrorMessage(err));
                     setSelectedQuiz("");
                 });
         },
@@ -149,7 +149,7 @@ export default function Quiz({ setSelectedQuiz,...props }) {
                 ]);
             })
             .catch((err) => {
-                console.log(getErrorMessage(err));
+                alert(getErrorMessage(err));
             });
     }, []);
 
@@ -168,7 +168,7 @@ export default function Quiz({ setSelectedQuiz,...props }) {
                 );
             })
             .catch((err) => {
-                console.log(getErrorMessage(err));
+                alert(getErrorMessage(err));
             });
     }, []);
 

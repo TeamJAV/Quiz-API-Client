@@ -108,7 +108,7 @@ export default function QuizList(props) {
                 setQuizzes(res.data.data);
             })
             .catch((err) => {
-                console.log(getErrorMessage(err));
+                alert(getErrorMessage(err));
             });
     }, []);
 
@@ -129,7 +129,7 @@ export default function QuizList(props) {
                 const title = data.title;
                 props.onSelect({ id, title });
             })
-            .catch((err) => console.log(getErrorMessage(err)));
+            .catch((err) => alert(getErrorMessage(err)));
     };
 
     const handleOnDeleteQuiz = () => {
@@ -141,7 +141,7 @@ export default function QuizList(props) {
                 setQuizzes(quizzes.filter((quiz) => quiz.id !== quizId));
             })
             .catch((err) => {
-                console.log(getErrorMessage(err));
+                alert(getErrorMessage(err));
             });
     };
 
