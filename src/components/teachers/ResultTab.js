@@ -62,6 +62,7 @@ const List = () => {
                                 )
                                 .catch((err) => alert(getErrorMessage(err)));
                         }}
+                        className="btn-trans text-display"
                     >
                         Close Room
                     </Button>

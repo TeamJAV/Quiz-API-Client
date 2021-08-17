@@ -1,29 +1,28 @@
 import React from "react";
-import BTable from 'react-bootstrap/Table'
+import BTable from "react-bootstrap/Table";
 import { useTable, useSortBy } from "react-table";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Table = ({ data, columns, onClickTitle }) => {
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow,
-    } = useTable({ columns, data, onClickTitle }, useSortBy);
+    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+        useTable({ columns, data, onClickTitle }, useSortBy);
 
     return (
         <BTable {...getTableProps()} className="r-table">
             <thead>
-                {headerGroups.map((headerGroup) => ( 
+                {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map((column) => {
                             return (
                                 <th
-                                    {...column.getHeaderProps(
-                                        column.getSortByToggleProps()
-                                    )}
+                                    {...column.getHeaderProps([
+                                        {
+                                            className: column.className,
+                                            style: column.style,
+                                        },
+                                        column.getSortByToggleProps(),
+                                    ])}
                                 >
                                     {column.render("Header")}
                                     <span>
@@ -67,4 +66,4 @@ const Table = ({ data, columns, onClickTitle }) => {
     );
 };
 
-export default Table
+export default Table;

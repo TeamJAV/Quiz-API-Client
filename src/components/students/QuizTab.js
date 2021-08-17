@@ -78,6 +78,7 @@ export default function QuizTab() {
         () => room && room?.r_id && room?.status,
         [room]
     );
+    console.log(questions)
     const isRoomOffline = useMemo(
         () => isRoomValid && room.status === "Offline",
         [isRoomValid]
@@ -92,7 +93,6 @@ export default function QuizTab() {
                 .get("/api/student", studentHeaderConfig)
                 .then((res) => {
                     const resQuestions = res.data.data.quiz.questions;
-                    console.log(resQuestions);
                     setQuestions(
                         handleShuffleQuiz(
                             resQuestions,

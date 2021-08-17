@@ -35,7 +35,7 @@ export default function ResultTab() {
                 Your Score: {score}&#47;
                 {total}
             </h2>
-            <div>
+            <div className="progress-container">
                 <ProgressBar
                     striped
                     animated={true}

@@ -1,65 +1,55 @@
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useHeaderConfig } from "../../utils/Users";
 import Container from "react-bootstrap/Container";
 import { useHistory, useParams } from "react-router-dom";
-import { useHeaderConfig } from "../../utils/Users";
 import { getErrorMessage } from "../../utils/utils";
-import Button from "react-bootstrap/Button";
-import Pusher from "pusher-js";
 
-export default function LiveResult() {
+export default function Result({ live = false }) {
     const { id } = useParams();
     const [result, setResult] = useState([]);
     const [quiz, setQuiz] = useState({});
-    const [testId, setTestId] = useState(null);
-    const [percent, setPercent] = useState({});
     const headerConfig = useHeaderConfig();
     const history = useHistory();
 
-    console.log(quiz, result, testId);
+    const [percent, setPercent] = useState({});
+    const [selectedQuestion, setSelectedQuestion] = useState(null);
+    console.log(percent);
 
     useEffect(() => {
         axios
-            .get(`/api/teacher/result-live/${id}`, headerConfig)
+            .get(`/api/teacher/result/detail_result/${id}`, headerConfig)
             .then((res) => {
                 const data = res.data.data;
                 console.log(data);
-                setPercent(data.percent);
+
                 setResult(data.result_live);
                 setQuiz(data.quiz);
-                setTestId(data.key_channel);
+                setPercent(data.percent);
+
+                //Let the server handle calculating percent in the future?
+                // if (data?.result_live && Array.isArray(data.result_live)) {
+                //     const p = {};
+                //     data.result_live.forEach((student) => {
+                //         student.student_choices.forEach((question) => {
+                //             if (question.student_choice.correct) {
+                //                 p[question.question_id] =
+                //                     (p[question.question_id] || 0) + 1;
+                //             }
+                //         });
+                //     });
+                //     setTotalCorrect(p);
+                // }
             })
-            .catch((err) => alert(getErrorMessage(err)));
+            .catch((err) => console.log(getErrorMessage(err)));
     }, []);
 
-    useEffect(() => {
-        if (!testId) return;
-        Pusher.logToConsole = true;
-        const pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
-            cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
-        });
-        const channel = pusher.subscribe(`result-teacher.${testId}`);
-        channel.bind("event-result-teacher", function (data) {
-            console.log(data);
-            const newResult = data.result_live.map((d) => {
-                const oldResult = result.filter((r) => r.id === d.id);
-                if (oldResult.length === 0) return d;
-                return {
-                    ...oldResult[0],
-                    scores: d.scores,
-                    student_choices: d.student_choices,
-                };
-            });
-            console.log(newResult);
-            setResult(newResult);
-            setPercent(data.percent);
-        });
-    }, [testId]);
+    useEffect(() => {}, [result]);
 
     const renderTableContent = () => {
         if (!quiz?.questions) return null;
         return (
-            <table>
+            <table className="font-editor text-blue-900">
                 <thead>
                     <tr>
                         <th>
@@ -73,6 +63,13 @@ export default function LiveResult() {
                                 className={q.question_type}
                                 data-id={q.id}
                                 key={index}
+                                onClick={() => {
+                                    if (!live) {
+                                        history.push(
+                                            `/teacher/reports/${id}/${q.id}`
+                                        );
+                                    }
+                                }}
                             >
                                 {index + 1}
                             </th>
@@ -135,22 +132,10 @@ export default function LiveResult() {
                 className="flex justify-between shadow-border-b"
                 style={{ padding: "4rem 0", marginBottom: "20px" }}
             >
-                <div className="text-xl font-600">{quiz?.title}</div>
-                <Button
-                    className="btn-custom--2 btn-inc py-1r btn-finish btn-pill text-display font-600"
-                    onClick={() => {
-                        axios
-                            .post(
-                                `/api/teacher/room/${id}/stop-launch`,
-                                {},
-                                headerConfig
-                            )
-                            .then(() => history.push("/teacher/results"))
-                            .catch((err) => alert(getErrorMessage(err)));
-                    }}
-                >
-                    FINISH
-                </Button>
+                <div className="text-blue-900">
+                    <p className="text-xl font-700 m-0">{quiz?.title}</p>
+                    <p className="text-md m-0">{quiz?.created_at}</p>
+                </div>
             </div>
             {renderTableContent()}
         </Container>

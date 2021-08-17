@@ -72,6 +72,12 @@ button,
     color: $white--normal !important;
 }
 
+.btn-trans {
+    background-color: transparent;
+    color: $blue--xbold;
+    font-weight: 600;
+}
+
 // ------------------- Input ----------------//
 
 input:focus {
@@ -364,6 +370,10 @@ input.error {
     color: $blue3--bold;
 }
 
+.text-blue-900 {
+    color: $blue3--900;
+}
+
 // ---------------- Background ----------------//
 .bg-grey--light {
     background-color: $grey--light;
@@ -383,6 +393,10 @@ input.error {
 
 .bg-orange {
     background-color: $orange--normal;
+}
+
+.bg-trans {
+    background-color: transparent;
 }
 
 // ---------------- Box shadows & border ----------------//
@@ -407,6 +421,10 @@ input.error {
     button.close > span:first-child {
         font-size: 4rem;
     }
+}
+
+.modal-body {
+    padding: 1.5rem;
 }
 
 .container, .container-fluid {

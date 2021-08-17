@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-export default function SearchInput({ searchTerm, setSearchTerm }) {
+export default function SearchInput({
+    searchTerm,
+    setSearchTerm,
+    placeholder = "Search Quizzes",
+}) {
     const [searchInput, setSearchInput] = useState(searchTerm);
     const debouncedSearchInput = useDebounce(searchInput, 500);
 
@@ -22,7 +26,7 @@ export default function SearchInput({ searchTerm, setSearchTerm }) {
                     className="input-2"
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
-                    placeholder="Search Quizzes"
+                    placeholder={placeholder}
                 ></input>
                 {searchInput !== "" ? (
                     <FontAwesomeIcon

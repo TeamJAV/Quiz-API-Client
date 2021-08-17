@@ -20,6 +20,9 @@ import { getErrorMessage } from "../../utils/utils";
 import ResultTab from "../../components/teachers/ResultTab";
 import Header from "../../components/commons/Header";
 import LiveResult from "../../components/teachers/LiveResult";
+import ReportTab from "../../components/teachers/ReportTab";
+import Result from "../../components/teachers/Result";
+import ResultSingleQuestion from "../../components/teachers/ResultSingleQuestion";
 
 const getCurrentActiveKey = (location) => {
     const strSplit = location.split("/");
@@ -107,8 +110,14 @@ function TDashboard() {
                     <Route path="/teacher/rooms">
                         <RoomTab></RoomTab>
                     </Route>
+                    <Route path="/teacher/reports/:id/:questionId">
+                        <ResultSingleQuestion></ResultSingleQuestion>
+                    </Route>
+                    <Route path="/teacher/reports/:id">
+                        <Result></Result>
+                    </Route>
                     <Route path="/teacher/reports">
-                        <div>Reports</div>
+                        <ReportTab></ReportTab>
                     </Route>
                     <Route path="/teacher/results/:id">
                         <LiveResult></LiveResult>

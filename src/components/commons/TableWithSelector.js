@@ -68,6 +68,7 @@ const Table = ({
                             </div>
                         );
                     },
+                    maxWidth: 90,
                 },
                 ...columns,
             ]);
@@ -87,9 +88,13 @@ const Table = ({
                             // console.log(column);
                             return (
                                 <th
-                                    {...column.getHeaderProps(
-                                        column.getSortByToggleProps()
-                                    )}
+                                    {...column.getHeaderProps([
+                                        {
+                                            className: column.className,
+                                            style: column.style,
+                                        },
+                                        column.getSortByToggleProps(),
+                                    ])}
                                 >
                                     {column.render("Header")}
                                     <span>

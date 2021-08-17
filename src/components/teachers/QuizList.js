@@ -27,15 +27,24 @@ const columns = [
         Header: "DATE",
         accessor: "created_at",
         Cell: ({ value }) => {
-            return toLocaleDateString(value);
+            return (
+                <div style={{ maxWidth: "150px" }}>
+                    {toLocaleDateString(value)}
+                </div>
+            );
         },
+        className: "short-date",
     },
     {
         Header: "COPY",
         accessor: "copy",
         disableSortBy: true,
         Cell: ({ cell }) => (
-            <button type="button" className="text-blue">
+            <button
+                type="button"
+                className="text-blue bg-trans"
+                style={{ margin: "0 auto", width: "100%" }}
+            >
                 <FontAwesomeIcon
                     className="icon"
                     id="copy-icon"
@@ -43,13 +52,18 @@ const columns = [
                 ></FontAwesomeIcon>
             </button>
         ),
+        className: "column-btn",
     },
     {
         Header: "DOWNLOAD",
         accessor: "download",
         disableSortBy: true,
         Cell: ({ cell }) => (
-            <button type="button" className="text-blue">
+            <button
+                type="button"
+                className="text-blue bg-trans"
+                style={{ margin: "0 auto", width: "100%" }}
+            >
                 <FontAwesomeIcon
                     className="icon"
                     id="download-icon"
@@ -57,13 +71,18 @@ const columns = [
                 ></FontAwesomeIcon>
             </button>
         ),
+        className: "column-btn",
     },
     {
         Header: "SHARE",
         accessor: "share",
         disableSortBy: true,
         Cell: ({ cell }) => (
-            <button type="button" className="text-blue">
+            <button
+                type="button"
+                className="text-blue bg-trans"
+                style={{ margin: "0 auto", width: "100%" }}
+            >
                 <FontAwesomeIcon
                     className="icon"
                     id="share-icon"
@@ -71,6 +90,7 @@ const columns = [
                 ></FontAwesomeIcon>
             </button>
         ),
+        className: "column-btn",
     },
 ];
 

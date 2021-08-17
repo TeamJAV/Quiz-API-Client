@@ -53,11 +53,16 @@ export default function RoomList() {
         setRoomModalData({ name: "" });
     };
 
-    const handleDeleteRoom = useCallback((id) => {
-        fetchDeleteRoom(id, headerConfig)
-            .then((res) => setRooms(r => r.filter((room) => room.id !== id)))
-            .catch((err) => alert(getErrorMessage(err)));
-    }, [headerConfig]);
+    const handleDeleteRoom = useCallback(
+        (id) => {
+            fetchDeleteRoom(id, headerConfig)
+                .then((res) =>
+                    setRooms((r) => r.filter((room) => room.id !== id))
+                )
+                .catch((err) => alert(getErrorMessage(err)));
+        },
+        [headerConfig]
+    );
 
     const createRoom = (name) => {
         fetchCreateUpdateRoom({ name: name }, headerConfig)
@@ -115,7 +120,11 @@ export default function RoomList() {
                 accessor: "share",
                 disableSortBy: true,
                 Cell: () => (
-                    <button type="button" className="text-blue">
+                    <button
+                        type="button"
+                        className="text-blue bg-trans"
+                        style={{ margin: "0 auto", width: "100%" }}
+                    >
                         <FontAwesomeIcon
                             className="icon"
                             id="share-icon"
@@ -123,6 +132,7 @@ export default function RoomList() {
                         ></FontAwesomeIcon>
                     </button>
                 ),
+                className: "column-btn--2",
             },
             {
                 Header: "RENAME",
@@ -131,7 +141,8 @@ export default function RoomList() {
                 Cell: ({ cell }) => (
                     <button
                         type="button"
-                        className="text-blue"
+                        className="text-blue bg-trans"
+                        style={{ margin: "0 auto", width: "100%" }}
                         onClick={() => {
                             const row = cell.row.original;
                             setRoomModalData({
@@ -147,6 +158,7 @@ export default function RoomList() {
                         ></FontAwesomeIcon>
                     </button>
                 ),
+                className: "column-btn--2",
             },
             {
                 Header: "DELETE",
@@ -155,7 +167,8 @@ export default function RoomList() {
                 Cell: ({ cell }) => (
                     <button
                         type="button"
-                        className="text-blue"
+                        className="text-blue bg-trans"
+                        style={{ margin: "0 auto", width: "100%" }}
                         onClick={() => {
                             const row = cell.row.original;
                             handleDeleteRoom(row.id);
@@ -168,6 +181,7 @@ export default function RoomList() {
                         ></FontAwesomeIcon>
                     </button>
                 ),
+                className: "column-btn--2",
             },
         ],
         [handleDeleteRoom]
@@ -225,11 +239,13 @@ const RoomNameModal = ({ roomData, setRoomData, handleSubmit }) => {
                 onChange={(e) => {
                     setName(e.target.value);
                 }}
-                style={{width: "100%", marginBottom: "30px"}}
+                style={{ width: "100%", marginBottom: "30px" }}
+                className="room-modal-input"
+                placeholder="What should I call this room..."
             ></input>
             <div className="flex">
                 <Button
-                    className=" py-1r bg-orange"
+                    className=" py-1r bg-orange room-modal-btn"
                     onClick={() => {
                         setIsLoading(!isLoading);
                         handleSubmit(name);

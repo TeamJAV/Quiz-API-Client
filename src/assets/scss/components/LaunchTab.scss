@@ -80,7 +80,8 @@
         background-color: $white--normal;
     }
 
-    .btn-dec:hover, .btn-dec:focus {
+    .btn-dec:hover,
+    .btn-dec:focus {
         background-color: $orange--normal;
         color: $white--normal;
     }
@@ -94,6 +95,13 @@
     .settings-container table {
         margin: 0 auto;
         vertical-align: middle;
+        border-spacing: 10px;
+        border-collapse: separate;
+        margin-bottom: 20px;
+    }
+
+    .settings-container table tbody tr td:nth-child(2) {
+        text-align: right;
     }
 
     .loading-container {

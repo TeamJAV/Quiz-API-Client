@@ -30,13 +30,13 @@
             border-radius: 3px;
         }
         th.multiple {
-            border-bottom: 2px solid $yellow--normal;
+            border-bottom: 3px solid $yellow--normal;
         }
         th.short-answer {
-            border-bottom: 2px solid $red--normal;
+            border-bottom: 3px solid $red--normal;
         }
         th.true-false {
-            border-bottom: 2px solid $blue2--normal;
+            border-bottom: 3px solid $blue2--normal;
         }
 
         tbody td {
@@ -44,3 +44,57 @@
         }
     }
 }
+
+.question-fields.result {
+    margin-bottom: 10px;
+    height: 3rem;
+    .question-input {
+        padding: 0;
+        margin: 0 1rem;
+    }
+}
+.question-fields.result.title {
+    margin-bottom: 15px;
+}
+.question-fields.result.explain {
+    margin-top: 25px;
+}
+
+.progress-container {
+    position: relative;
+    .progress-label {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .progress-label.answer {
+        left: 1rem;
+    }
+    .progress-label.percent {
+        right: 1rem;
+    }
+    .progress-question {
+        height: 100%;
+    }
+}
+
+.progress-container.true {
+    color: $green2--bold;
+    .progress-question {
+        background-color: $green--light;
+        .progress-bar {
+            background-color: $green2--light;
+        }
+    }
+}
+
+.progress-container.false {
+    color: $red2--bold;
+    .progress-question {
+        background-color: $pink--xlight;
+        .progress-bar {
+            background-color: $pink--light;
+        }
+    }
+}
+

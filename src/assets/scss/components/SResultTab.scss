@@ -8,4 +8,14 @@
     table > tbody > tr > td:first-child {
         text-align: left;
     }
+    margin-top: 50px;
+    h2,
+    .progress-container {
+        margin-bottom: 50px;
+    }
+    .progress-container {
+        .progress {
+            height: 1.5rem;
+        }
+    }
 }
