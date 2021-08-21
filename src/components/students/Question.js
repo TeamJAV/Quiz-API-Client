@@ -24,7 +24,7 @@ export default function Question({ selectedQuestion, setSelectedQuestion }) {
     // 1. answer state is an array
     // 2. every time answered context changes, answer need to be exactly equal to it (useEffect below)
     // 3. handleSubmitAnswer need to take value from array of answers
-    // 4. when user chooses the answers from multiple choices questions, 
+    // 4. when user chooses the answers from multiple choices questions,
     //      it needs to know whether user checks or unchecks that answer
     //      if check: add it to answer array,
     //      if uncheck: remove it from answer array.
@@ -113,13 +113,11 @@ export default function Question({ selectedQuestion, setSelectedQuestion }) {
         console.log({
             question_id: id,
             choices: [
-                question_type === "short-answer"
-                    ? answer
-                    : mapping[answer],
+                question_type === "short-answer" ? answer : mapping[answer],
             ],
             type: question_type,
-            mapping: mapping
-        })
+            mapping: mapping,
+        });
         axios
             .post(
                 "/api/student/submit-answer",
@@ -137,7 +135,13 @@ export default function Question({ selectedQuestion, setSelectedQuestion }) {
                 },
                 headerConfig
             )
-            .then()
+            .then(() => {
+                setQuestions((prevQuestions) =>
+                    prevQuestions.map((q) =>
+                        q.id === id ? { ...q, isSubmitted: true } : q
+                    )
+                );
+            })
             .catch((err) => alert(getErrorMessage(err)));
     };
 
@@ -200,17 +204,23 @@ export default function Question({ selectedQuestion, setSelectedQuestion }) {
                         size="lg"
                     ></FontAwesomeIcon>
                 </Button>
+                {!questions[selectedQuestion]?.isSubmitted ? (
+                    <Button
+                        className="btn-main--orange btn-change-question text-base"
+                        onClick={handleSubmitAnswer}
+                    >
+                        Submit
+                    </Button>
+                ) : (
+                    <Button
+                        className="btn-main--orange btn-change-question text-base"
+                        onClick={handleSubmitAnswer}
+                        style={{backgroundColor: "#4FBF26"}}
+                    >
+                        Submitted
+                    </Button>
+                )}
 
-                <Button
-                    className="btn-main--orange btn-change-question text-base"
-                    onClick={handleSubmitAnswer}
-                >
-                    {/* <FontAwesomeIcon
-                                    icon={faTrashAlt}
-                                    size="lg"
-                                ></FontAwesomeIcon> */}
-                    Submit
-                </Button>
                 <Button
                     className="btn-main btn-change-question text-base"
                     onClick={() => {

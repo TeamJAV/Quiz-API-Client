@@ -75,19 +75,23 @@ function shuffleChoices(array) {
         // And swap it with the current element.
         // "1" meaning only swap the value of the answer
         [original[1], random[1]] = [random[1], original[1]];
-        
+
         // And memorize the original key of the value we swapped
         if (mapping[original[0]]) {
             mapping[random[0]] = mapping[original[0]];
             mapping[original[0]] = mapping[random[0]] || random[0];
-
         } else {
             mapping[original[0]] = mapping[random[0]] || random[0];
             mapping[random[0]] = original[0];
         }
     }
 
-    return { choices: choices, mapping: mapping, answered: [] };
+    return {
+        choices: choices,
+        mapping: mapping,
+        answered: [],
+        isSubmitted: false,
+    };
 }
 
 function noShuffleChoices(array) {
@@ -96,7 +100,12 @@ function noShuffleChoices(array) {
         const key = element[0];
         mapping[key] = key;
     });
-    return { choices: Object.assign(array), mapping: mapping, answered: [] };
+    return {
+        choices: Object.assign(array),
+        mapping: mapping,
+        answered: [],
+        isSubmitted: false,
+    };
 }
 
 const handleShuffleQuiz = (
@@ -108,11 +117,11 @@ const handleShuffleQuiz = (
         ? shuffleQuestions(array)
         : array;
     const shuffledChoicesQuiz = shuffledQuestionsQuiz.map((q) => {
-        const { choices, mapping, answered  } =
+        const { choices, mapping, answered } =
             isChoicesShuffled && q.question_type !== "true-false"
                 ? shuffleChoices(Object.entries(q.choices))
                 : noShuffleChoices(Object.entries(q.choices));
-        return { ...q, choices, mapping, answered    };
+        return { ...q, choices, mapping, answered };
     });
     return shuffledChoicesQuiz;
 };

@@ -13,7 +13,10 @@ export default function ResultTab() {
         if (!rd_id) return;
         axios
             .post(`/api/student/result-test/${rd_id}`, {}, {})
-            .then((res) => {setResult(res.data.data); console.log(res.data.data)})
+            .then((res) => {
+                setResult(res.data.data);
+                console.log(res.data.data);
+            })
             .catch((err) => alert(getErrorMessage(err)));
     }, []);
 
@@ -27,7 +30,7 @@ export default function ResultTab() {
         Array.isArray(result.student_choices) &&
         result.student_choices.length;
     const progress = calculateProgress(score, total);
-    console.log(score, total)
+    console.log(score, total);
 
     return (
         <Container fluid className="text-center text-display s-result-tab">
@@ -43,19 +46,20 @@ export default function ResultTab() {
                     label={`${progress}%`}
                 ></ProgressBar>
             </div>
-            <table><tbody>
-                <tr>
-                    <td>Joined at:</td>
-                    <td>{result?.time_joined || ""}</td>
-                </tr>
-                <tr>
-                    <td>Finished at:</td>
-                    <td>{result?.time_end || ""}</td>
-                </tr>
-                <tr>
-                    <td>Total Time(s):</td>
-                    <td>{result?.time_do_seconds || ""}</td>
-                </tr>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Joined at:</td>
+                        <td>{result?.time_joined || ""}</td>
+                    </tr>
+                    <tr>
+                        <td>Finished at:</td>
+                        <td>{result?.time_end || ""}</td>
+                    </tr>
+                    <tr>
+                        <td>Total Time(s):</td>
+                        <td>{result?.time_do_seconds || ""}</td>
+                    </tr>
                 </tbody>
             </table>
         </Container>
