@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Container from "react-bootstrap/Container";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useHeaderConfig } from "../../utils/Users";
 import { getErrorMessage } from "../../utils/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +13,7 @@ export default function ResultSingleQuestion() {
     const { id, questionId } = useParams();
     const headerConfig = useHeaderConfig();
     const [result, setResult] = useState({});
+    const history = useHistory();
 
     useEffect(() => {
         console.log(id, questionId);
@@ -59,9 +60,7 @@ export default function ResultSingleQuestion() {
                             <div
                                 className={`flex-1 question-input progress-container ${
                                     // key === result?.question?.correct
-                                    index === 0
-                                        ? "true"
-                                        : "false"
+                                    index === 0 ? "true" : "false"
                                 }`}
                             >
                                 <ProgressBar
@@ -161,7 +160,12 @@ export default function ResultSingleQuestion() {
                 className="flex justify-between shadow-border-b"
                 style={{ paddingBottom: "20px" }}
             >
-                <Button className="btn-custom btn-trans text-sm">
+                <Button
+                    className="btn-custom btn-trans text-sm"
+                    onClick={() => {
+                        history.goBack();
+                    }}
+                >
                     <FontAwesomeIcon
                         icon={faChevronLeft}
                         style={{ marginRight: "20px" }}

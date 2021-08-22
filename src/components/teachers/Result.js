@@ -41,7 +41,7 @@ export default function Result({ live = false }) {
                 //     setTotalCorrect(p);
                 // }
             })
-            .catch((err) => console.log(getErrorMessage(err)));
+            .catch((err) => alert(getErrorMessage(err)));
     }, []);
 
     useEffect(() => {}, [result]);
