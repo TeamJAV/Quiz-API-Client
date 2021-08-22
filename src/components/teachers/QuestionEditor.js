@@ -363,7 +363,7 @@ export default function QuestionEditor(props) {
                             const question = createQuestionObject();
                             props.onSave(question);
                         } catch (err) {
-                            console.log(err);
+                            alert(err);
                         }
                     }}
                 >
